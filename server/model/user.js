@@ -18,6 +18,22 @@ const userSchema = new Schema({
     healthid: {
         type: Schema.Types.ObjectId,
         required: true
+    },
+    state:{
+        type: String,
+        required: true
+    },
+    district:{
+        type: String,
+        required: true
+    },
+    Tehsil:{
+        type: String,
+        required: true
+    },
+    address:{
+        type: String,
+        required: true
     }
 });
 

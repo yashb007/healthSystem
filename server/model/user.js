@@ -19,19 +19,23 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
-    state:{
+    state: {
         type: String,
         required: true
     },
-    district:{
+    district: {
         type: String,
         required: true
     },
-    Tehsil:{
+    Tehsil: {
         type: String,
         required: true
     },
-    address:{
+    address: {
+        type: String,
+        required: true
+    },
+    password: {
         type: String,
         required: true
     }

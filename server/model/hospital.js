@@ -26,7 +26,19 @@ const hospitalSchema = new Schema({
         type: String,
         required: true
     },
-    address: {
+    state:{
+        type: String,
+        required: true
+    },
+    district:{
+        type: String,
+        required: true
+    },
+    Tehsil:{
+        type: String,
+        required: true
+    },
+    address:{
         type: String,
         required: true
     },
@@ -43,7 +55,6 @@ const hospitalSchema = new Schema({
     },
     OccupiedBedsCount:{
         type: Number,
-        required: true
     },
     head: {
         type: String,
@@ -59,6 +70,13 @@ const hospitalSchema = new Schema({
     },
     Photo : {
         type: Buffer,
+            },
+    email:{
+        type: String,
+        required: true
+    },
+    password:{
+        type: String,
         required: true
     }
 });

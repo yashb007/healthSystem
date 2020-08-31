@@ -6,7 +6,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const csrf = require('csurf');
-
+const PORT = process.env.port || 8080;
 
 const app = express();
 const store = new MongoDBStore({
@@ -30,7 +30,7 @@ app.use(
 
 app.use(csrfProtection);
 
-
+app.use('/hospital',require('./routes/hospital'))
 //6oGsJUbNFKXUie00
 app.get('*', (req, res) => res.json({ working: "fine" }))
 app.post('*', (req, res) => res.json({ working: "fine" }))
@@ -48,7 +48,7 @@ mongoose.connect("mongodb+srv://yash:6oGsJUbNFKXUie00@cluster0.zjc3f.mongodb.net
 })
     .then(() => {
         console.log("DB CONNECTED");
-        app.listen(process.env.port || 8080);
+        
     })
     .catch(err => {
         console.log("OOOPS NOT CONNECTED", err);

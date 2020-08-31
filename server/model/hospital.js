@@ -3,19 +3,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const doctorSchema = mongoose.Schema({
-    name : {
+    name: {
         type: String,
         required: true
     },
-    field:{
+    field: {
         type: String,
         required: true
     },
-    Qualification:{
-        type: String,
-        required: true
-    },
-    contact:{
+    Qualification: {
         type: String,
         required: true
     }
@@ -26,35 +22,24 @@ const hospitalSchema = new Schema({
         type: String,
         required: true
     },
-    state:{
-        type: String,
-        required: true
-    },
-    district:{
-        type: String,
-        required: true
-    },
-    Tehsil:{
-        type: String,
-        required: true
-    },
-    address:{
+    address: {
         type: String,
         required: true
     },
     type: {
         type: String,
         required: true,
-        enum:['Government','Private']
+        enum: ['Government', 'Private']
     },
-    doctorList:[doctorSchema],
+    doctorList: [doctorSchema],
 
     totalBedsCount: {
         type: Number,
         required: true
     },
-    OccupiedBedsCount:{
+    OccupiedBedsCount: {
         type: Number,
+        required: true
     },
     head: {
         type: String,
@@ -64,18 +49,19 @@ const hospitalSchema = new Schema({
         type: Boolean,
         required: true
     },
-    Contact:{
+    Contact: {
         type: String,
         required: true
     },
-    Photo : {
+    Photo: {
         type: Buffer,
-            },
-    email:{
-        type: String,
         required: true
     },
-    password:{
+    hospitalid: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    password: {
         type: String,
         required: true
     }

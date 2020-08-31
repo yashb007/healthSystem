@@ -6,11 +6,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const csrf = require('csurf');
-<<<<<<< HEAD
-const PORT = process.env.port || 8080;
-=======
 const flash = require('connect-flash');
->>>>>>> bed4d3966d3a5d1b43375fd60b5491817bd01200
 
 const app = express();
 const store = new MongoDBStore({
@@ -40,23 +36,16 @@ app.use(
 app.use(csrfProtection);
 app.use(flash());
 
-<<<<<<< HEAD
-app.use('/hospital',require('./routes/hospital'))
-//6oGsJUbNFKXUie00
-app.get('*', (req, res) => res.json({ working: "fine" }))
-app.post('*', (req, res) => res.json({ working: "fine" }))
-=======
 
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.csrfToken = req.csrfToken();
     next();
 });
->>>>>>> bed4d3966d3a5d1b43375fd60b5491817bd01200
 
-app.use('/user', userRoutes);
-app.use('/auth', authRoutes);
-app.use('/hsp', hspRoutes);
+app.use('/user', userRoutes);                  //for user information routes will be - /user/something*
+app.use('/auth', authRoutes);                  //for user authentication routes will be - /auth/something*
+app.use('/hsp', hspRoutes);                    //for hospital authentication routes will be - /hsp/something*
 
 
 mongoose.connect("mongodb+srv://yash:6oGsJUbNFKXUie00@cluster0.zjc3f.mongodb.net/<dbname>?retryWrites=true&w=majority", {
@@ -66,7 +55,7 @@ mongoose.connect("mongodb+srv://yash:6oGsJUbNFKXUie00@cluster0.zjc3f.mongodb.net
 })
     .then(() => {
         console.log("DB CONNECTED");
-        
+        app.listen(process.env.port || 8080);
     })
     .catch(err => {
         console.log("OOOPS NOT CONNECTED", err);

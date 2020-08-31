@@ -6,7 +6,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const csrf = require('csurf');
-
+const flash = require('connect-flash');
 
 const app = express();
 const store = new MongoDBStore({
@@ -16,12 +16,17 @@ const store = new MongoDBStore({
 
 const csrfProtection = csrf();
 
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
+const hspRoutes = require('./routes/hospital');
+
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
     session({
-        secret: 'very very secret key',
+        secret: 'very very secret key it is',
         resave: false,
         saveUninitialized: false,
         store: store
@@ -29,16 +34,18 @@ app.use(
 );
 
 app.use(csrfProtection);
+app.use(flash());
 
 
-//6oGsJUbNFKXUie00
-app.get('*', (req, res) => res.json({ working: "fine" }))
-app.post('*', (req, res) => res.json({ working: "fine" }))
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
 
-
-app.listen(PORT, () => {
-    console.log(`Server is started at ${PORT}`)
-})
+app.use('/user', userRoutes);
+app.use('/auth', authRoutes);
+app.use('/hsp', hspRoutes);
 
 
 mongoose.connect("mongodb+srv://yash:6oGsJUbNFKXUie00@cluster0.zjc3f.mongodb.net/<dbname>?retryWrites=true&w=majority", {
@@ -52,4 +59,5 @@ mongoose.connect("mongodb+srv://yash:6oGsJUbNFKXUie00@cluster0.zjc3f.mongodb.net
     })
     .catch(err => {
         console.log("OOOPS NOT CONNECTED", err);
-    })
+    });
+//6oGsJUbNFKXUie00

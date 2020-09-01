@@ -44,4 +44,4 @@ router.post('signup', [
         })
 ], authController.postSignup);
 
-router.post('/logout', authController.postLogut);
+router.post('/logout', authController.postLogout);

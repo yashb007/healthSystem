@@ -43,9 +43,9 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/user', userRoutes);
-app.use('/auth', authRoutes);
-app.use('/hsp', hspRoutes);
+app.use('/user', userRoutes);                  //for user information routes will be - /user/something*
+app.use('/auth', authRoutes);                  //for user authentication routes will be - /auth/something*
+app.use('/hsp', hspRoutes);                    //for hospital authentication routes will be - /hsp/something*
 
 
 mongoose.connect("mongodb+srv://yash:6oGsJUbNFKXUie00@cluster0.zjc3f.mongodb.net/<dbname>?retryWrites=true&w=majority", {
@@ -55,7 +55,7 @@ mongoose.connect("mongodb+srv://yash:6oGsJUbNFKXUie00@cluster0.zjc3f.mongodb.net
 })
     .then(() => {
         console.log("DB CONNECTED");
-        
+        app.listen(process.env.port || 8080);
     })
     .catch(err => {
         console.log("OOOPS NOT CONNECTED", err);

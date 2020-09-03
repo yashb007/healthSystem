@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const { validationresult } = require('express-validator/check');
 const Hospital = require('../model/hospital');
-
+const Doctor = require('../model/doctor')
 
 exports.getLogin = (req, res, next) => {
     // showing the Login Page
@@ -13,10 +13,8 @@ exports.getSignup = (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
 
-    const hspid = req.body.hospitalid;
-    const password = req.body.password;
-
-    Hospital.findOne({ hospitalid: hspid })
+    const {hospitalid , password } = req.body
+    Hospital.findOne({ hospitalid })
         .then(hospital => {
             bcrypt.compare(password, hospital.password)
                 .then(match => {
@@ -41,41 +39,32 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.postSignup = (req, res, next) => {
+     
+ const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,head,lab,Contact,photo,hospitalid,password }  = req.body
 
-    const hspname = req.body.hspname;
-    const address = req.body.address;
-    const type = req.body.type;
-    const bedcount = req.body.bedcount;
-    const occupiedbeds = req.body.occupiedbeds;
-    const head = req.body.head;
-    const lab = req.body.lab;
-    const contact = req.body.contact;
-    const hspid = req.body.hospitalid;
-    const password = req.body.password;
-    const docname = req.body.docname;
-    const field = req.body.field;
-    const qualification = req.body.qualification;
-
+    
     bcrypt.hash(password, 12)
         .then(hashedpwd => {
             const hospital = new Hospital({
-                name: hspname,
-                address: address,
-                type: type,
-                doctorList: {
-                    DoctorInfo: [docname, field, qualification]
-                },
-                totalBedsCount: bedcount,
-                OccupiedBedsCount: occupiedbeds,
-                head: head,
-                lab: lab,
-                Contact: contact,
-                hospitalid: hspid,
-                password: hashedpwd
+                name,
+                state,
+                district,
+                Tehsil,
+                address,
+                type,
+                totalBedsCount,
+                OccupiedBedsCount,
+                head,
+                lab,
+                Contact,
+                hospitalid,
+                password: hashedpwd,
+                photo
             });
             return hospital.save();
         })
         .then(result => {
+            console.log("Hospital registered")
             //redirect to login page
         })
         .catch(err => {
@@ -89,3 +78,34 @@ exports.postLogout = (req, res, next) => {
         //redirecting to hommepage
     });
 };
+
+exports.addDoctor = (req,res) => {
+    const {name , field , qualification  } = req.body;
+    var result = '';
+    var characters  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$?';
+    for ( var i = 0; i < 8; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+     }
+
+     bcrypt.hash(result , 12).then(hashedKey => {
+         const doctor = new Doctor({
+             name ,
+             field , 
+             qualification , 
+             key = hashedKey
+         })
+         return doctor.save()
+     }).then(result => {
+         res.json("Doctor Added")
+     }).catch(err => {
+         console.log(err)
+     })
+} 
+
+
+
+exports.listDoctors = (req,res) => {
+    Doctor.find({hospital : req.hospital.id}).then(list =>{
+        res.json({list})
+    }).catch(err => console.log(err))
+}

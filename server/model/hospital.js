@@ -1,24 +1,21 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
-const doctorSchema = mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    field: {
-        type: String,
-        required: true
-    },
-    Qualification: {
-        type: String,
-        required: true
-    }
-})
 
 const hospitalSchema = new Schema({
     name: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String,
+        required: true
+    },
+    district: {
+        type: String,
+        required: true
+    },
+    Tehsil: {
         type: String,
         required: true
     },
@@ -31,8 +28,6 @@ const hospitalSchema = new Schema({
         required: true,
         enum: ['Government', 'Private']
     },
-    doctorList: [doctorSchema],
-
     totalBedsCount: {
         type: Number,
         required: true
@@ -68,4 +63,3 @@ const hospitalSchema = new Schema({
 });
 
 module.exports = mongoose.model('Hospital', hospitalSchema);
-module.exports = mongoose.model('Doctor', doctorSchema);

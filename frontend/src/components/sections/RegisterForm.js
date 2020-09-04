@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const RegisterForm = (props) => {
   return (
@@ -7,15 +6,15 @@ const RegisterForm = (props) => {
       <fieldset>
         <div className="mb-16">
           <label className="form-label" htmlFor="form-name">Hospital Name</label>
-          <input id="form-name" className="form-input" type="text" placeholder="Text placeholder" required />
+          <input id="form-name" className="form-input" type="text" placeholder="Hospital Name" required />
         </div>
         <div className="mb-16">
-          <label className="form-label" for="form-username">Username</label>
-          <input id="form-username" className="form-input form-success" type="text" placeholder="Username" value="Cruip" required />
+          <label className="form-label" for="form-username">Head Name</label>
+          <input id="form-username" className="form-input" type="text" placeholder="Head name" required />
         </div>
         <div className="mb-16">
           <label className="form-label" for="form-email">Email</label>
-          <input id="form-email" className="form-input form-error" type="email" placeholder="Email" value="hello@" required />
+          <input id="form-email" className="form-input" type="email" placeholder="Email" required />
         </div>
         <div className="mb-16">
           <label className="form-label" for="form-color">Hospital Type</label>
@@ -27,8 +26,36 @@ const RegisterForm = (props) => {
           </select>
         </div>
         <div className="mb-16">
-          <label className="form-label" for="form-message">Message</label>
-          <textarea id="form-message" className="form-input" placeholder="Textarea placeholder"></textarea>
+          <label className="form-label" for="form-username">State</label>
+          <input id="form-username" className="form-input" type="text" placeholder="State" required />
+        </div>
+        <div className="mb-16">
+          <label className="form-label" for="form-username">District</label>
+          <input id="form-username" className="form-input" type="text" placeholder="District" required />
+        </div>
+        <div className="mb-16">
+          <label className="form-label" for="form-username">Tehsil</label>
+          <input id="form-username" className="form-input" type="text" placeholder="Tehsil" required />
+        </div>
+        <div className="mb-16">
+          <label className="form-label" for="form-message">Address</label>
+          <textarea id="form-message" className="form-input" placeholder="Address"></textarea>
+        </div>
+        <div className="mb-16">
+          <label className="form-label" for="form-message">Total Beds</label>
+          <input type="number" id="form-message" className="form-input" placeholder="Total Beds" />
+        </div>
+        <div className="mb-16">
+          <label className="form-label" for="form-message">Occupied Beds</label>
+          <input type="number" id="form-message" className="form-input" placeholder="Occupied beds" />
+        </div>
+        <div className="mb-16">
+          <label className="form-label" for="form-message">Contact Number</label>
+          <input type="number" id="form-message" className="form-input" placeholder="Contact Number" />
+        </div>
+        <div className="mb-16">
+          <label className="form-label" for="form-message">Photo</label>
+          <input type="file" id="form-message" className="form-input" placeholder="Click to upload" />
         </div>
         <div className="mt-24">
           <div className="button-group">

@@ -11,6 +11,8 @@ import Home from './views/Home';
 import Both from './views/Both'
 import Login from './views/Login'
 import Register from './views/Register';
+import RegisterLab from './views/RegisterLab';
+import LoginLab from './views/LoginLab';
 
 
 const App = () => {
@@ -25,6 +27,8 @@ const App = () => {
           <AppRoute path="/both" component={Both} layout={LayoutDefault} />
           <AppRoute path="/hospital/login" component={Login} layout={LayoutDefault} />
           <AppRoute path="/hospital/register" component={Register} layout={LayoutDefault} />
+          <AppRoute path="/lab/login" component={LoginLab} layout={LayoutDefault} />
+          <AppRoute path="/lab/register" component={RegisterLab} layout={LayoutDefault} />
         </Switch>
       )} />
   );

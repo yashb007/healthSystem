@@ -16,10 +16,6 @@ const store = new MongoDBStore({
 
 const csrfProtection = csrf();
 
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/user');
-const hspRoutes = require('./routes/hospital');
-
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -42,6 +38,10 @@ app.use((req, res, next) => {
     res.locals.csrfToken = req.csrfToken();
     next();
 });
+
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
+const hspRoutes = require('./routes/hospital');
 
 app.use('/user', userRoutes);                  //for user information routes will be - /user/something*
 app.use('/auth', authRoutes);                  //for user authentication routes will be - /auth/something*

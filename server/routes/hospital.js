@@ -18,10 +18,10 @@ router.post('/login', [
         .trim()
 ], hospital.postLogin);
 
-router.post('signup', [
+router.post('/signup', [
     check('hospitalid')
         .custom((value, { req }) => {
-            return Hospital.findOne({ hospitalid: value }).then(HospitalDoc => {
+            return Hospital.findOne({ email: value }).then(HospitalDoc => {
                 if (HospitalDoc) {
                     return Promise.reject(
                         'Hospital exists already.'
@@ -35,15 +35,9 @@ router.post('signup', [
     )
         .isLength({ min: 5 })
         .isAlphanumeric()
-        .trim(),
-    body('confirmPassword')
         .trim()
-        .custom((value, { req }) => {
-            if (value !== req.body.password) {
-                throw new Error('Passwords have to match!');
-            }
-            return true;
-        })
+   
+        
 ], hospital.postSignup);
 
 router.post('/logout', hospital.postLogout);

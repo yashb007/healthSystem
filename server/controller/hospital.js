@@ -132,7 +132,16 @@ exports.addDoctor = (req,res) => {
 } 
 
 exports.listDoctors = (req,res) => {
-    Doctor.find({hospital : req.hospital.id}).then(list =>{
+    Doctor.find({_id : req.hospital._id}).then(list =>{
         res.json({list})
     }).catch(err => console.log(err))
+}
+
+exports.showHosInfoById = (req,res) => {
+    Hospital.findOne(req.hospital._id).exec((err,hos) => {
+        if(err){
+            return res.json("No hospital find")
+        }
+        return res.json({hos})
+    } )
 }

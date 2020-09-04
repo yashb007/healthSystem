@@ -42,7 +42,12 @@ const labSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    tests:[
+        {
+            type : String
+        }
+    ]
 });
 
 module.exports = mongoose.model('Lab', labSchema);

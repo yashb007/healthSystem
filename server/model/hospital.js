@@ -36,6 +36,10 @@ const hospitalSchema = new Schema({
         type: Number,
         required: true
     },
+    email:{
+        type: String,
+        required: true
+    },
     head: {
         type: String,
         required: true
@@ -49,8 +53,8 @@ const hospitalSchema = new Schema({
         required: true
     },
     Photo: {
-        type: Buffer,
-        required: true
+        type: Buffer
+       
     },
     password: {
         type: String,

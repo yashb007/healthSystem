@@ -25,8 +25,8 @@ exports.getSignup = (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
 
-    const {hospitalid , password } = req.body
-    Hospital.findOne({ hospitalid })
+    const {email , password } = req.body
+    Laboratry.findOne({ email })
         .then(hospital => {
             bcrypt.compare(password, hospital.password)
                 .then(match => {
@@ -52,31 +52,27 @@ exports.postLogin = (req, res, next) => {
 
 exports.postSignup = (req, res, next) => {
      
- const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,head,lab,Contact,photo,password }  = req.body
+ const {name,state,district,Tehsil,address,head,email,Contact,photo,password }  = req.body
 
     
     bcrypt.hash(password, 12)
         .then(hashedpwd => {
-            const hospital = new Hospital({
+            const lab = new Laboratry({
                 name,
                 state,
                 district,
                 Tehsil,
                 address,
-                type,
-                totalBedsCount,
-                OccupiedBedsCount,
                 head,
-                lab,
+                email,
                 Contact,
-                
                 password: hashedpwd,
                 photo
             });
-            return hospital.save();
+            return lab.save();
         })
         .then(result => {
-            console.log("Hospital registered")
+            console.log("Lab registered")
             //redirect to login page
         })
         .catch(err => {
@@ -91,46 +87,38 @@ exports.postLogout = (req, res, next) => {
     });
 };
 
-exports.addDoctor = (req,res) => {
-    const {name ,email , contact , field , qualification  } = req.body;
-    var result = '';
-    var characters  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$?';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < 8; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-     }
-      const doctorKey = result;
-     bcrypt.hash(result , 12).then(hashedKey => {
-         const doctor = new Doctor({
-             name ,
-             email,
-             contact,
-             field , 
-             qualification , 
-             key : hashedKey
-         })
-         return doctor.save()
-     }).then(result => {
-         res.json(doctorKey)
-     }).catch(err => {
-         console.log(err)
-     })
-} 
+exports.updateLabInfo = (req,res) => {
+    const {head,email,Contact,photo }  = req.body
 
-exports.listDoctors = (req,res) => {
-    Doctor.find({hospital : req.hospital.id}).then(list =>{
-        res.json({list})
-    }).catch(err => console.log(err))
-}
-
-exports.updateHospInfo = (req,res) => {
-    const {totalBedsCount,OccupiedBedsCount,head,lab,Contact,photo }  = req.body
-
-    Hospital.findByIdAndUpdate(req.hospital._id, {$set : {totalBedsCount,OccupiedBedsCount,head,lab,Contact,photo }}, {new : true},
+    Laboratry.findByIdAndUpdate(req.lab._id, {$set : {head,email,Contact,photo }}, {new : true},
         (err,result) =>{
            if(err){
             return res.status(422).json({error:"Updation Failed"})
            }
            res.json({result, message:"Updation done "} )
         } )
+}
+
+exports.showLabInfoById = (req,res) => {
+    Laboratry.findOne(req.lab._id).exec((err,lab) => {
+        if(err){
+            return res.json("No lab find")
+        }
+        return res.json({lab})
+    } )
+}
+
+
+exports.addTests = (req,res) => {
+       const {test} = req.body;
+       Laboratry.findByIdAndUpdate(req.lab._id,{
+           $push :{ tests :test}
+       }).exec((err,result) => {
+           if(err){
+            return res. status(422).json({error : err})
+        }
+        
+         return res.json(result)
+        
+       })
 }

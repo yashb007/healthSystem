@@ -23,12 +23,12 @@ const App = () => {
       ref={childRef}
       children={() => (
         <Switch>
-          <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
-          <AppRoute path="/both" component={Both} layout={LayoutDefault} />
-          <AppRoute path="/hospital/login" component={Login} layout={LayoutDefault} />
-          <AppRoute path="/hospital/register" component={Register} layout={LayoutDefault} />
-          <AppRoute path="/lab/login" component={LoginLab} layout={LayoutDefault} />
-          <AppRoute path="/lab/register" component={RegisterLab} layout={LayoutDefault} />
+          <AppRoute exact path="/" component={Home} signin="/both" reg="/both" layout={LayoutDefault} />
+          <AppRoute path="/both" signin="/both" reg="/both" component={Both} layout={LayoutDefault} />
+          <AppRoute path="/hospital/login" signin="/hospital/login" reg="/hospital/register" component={Login} layout={LayoutDefault} />
+          <AppRoute path="/hospital/register" signin="/hospital/login" reg="/hospital/register" component={Register} layout={LayoutDefault} />
+          <AppRoute path="/lab/login" signin="/lab/login" reg="/lab/register" component={LoginLab} layout={LayoutDefault} />
+          <AppRoute path="/lab/register" signin="/lab/login" reg="/lab/register" component={RegisterLab} layout={LayoutDefault} />
         </Switch>
       )} />
   );

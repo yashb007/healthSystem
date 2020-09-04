@@ -2,11 +2,11 @@ import React from 'react';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 
-const LayoutDefault = ({ children }) => (
+const LayoutDefault = (props) => (
   <>
-    <Header navPosition="right" className="reveal-from-bottom" />
+    <Header signin={props.signin} reg={props.reg} navPosition="right" className="reveal-from-bottom" />
     <main className="site-content">
-      {children}
+      {props.children}
     </main>
     <Footer />
   </>

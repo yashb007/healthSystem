@@ -8,6 +8,7 @@ import LayoutDefault from './layouts/LayoutDefault';
 
 // Views 
 import Home from './views/Home';
+import Both from './views/Both'
 
 const App = () => {
 
@@ -18,6 +19,7 @@ const App = () => {
       children={() => (
         <Switch>
           <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
+          <AppRoute path="/both" component={Both} layout={LayoutDefault} />
         </Switch>
       )} />
   );

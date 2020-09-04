@@ -52,10 +52,6 @@ const hospitalSchema = new Schema({
         type: Buffer,
         required: true
     },
-    hospitalid: {
-        type: Schema.Types.ObjectId,
-        required: true
-    },
     password: {
         type: String,
         required: true

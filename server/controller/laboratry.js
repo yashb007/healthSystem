@@ -1,16 +1,16 @@
 const bcrypt = require('bcryptjs');
 const { validationresult } = require('express-validator/check');
-const Hospital = require('../model/hospital');
+const Laboratry = require('../model/laboratry');
 const Doctor = require('../model/doctor')
 
-exports.getHospById = (req,res,next,id) => {
-    Hospital.findById(id).exec((err,hos) => {
+exports.getLabById = (req,res,next,id) => {
+    Laboratry.findById(id).exec((err,lab) => {
         if(err || !hos){
             return res.status(400).json({
-                error : "No hospital  found in db"
+                error : "No laboratry  found in db"
             })
         }
-        req.hospital = hos;
+        req.laboratry = lab;
         next()
     })
 }
@@ -25,8 +25,8 @@ exports.getSignup = (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
 
-    const {email , password } = req.body
-    Hospital.findOne({ email })
+    const {hospitalid , password } = req.body
+    Hospital.findOne({ hospitalid })
         .then(hospital => {
             bcrypt.compare(password, hospital.password)
                 .then(match => {
@@ -52,7 +52,7 @@ exports.postLogin = (req, res, next) => {
 
 exports.postSignup = (req, res, next) => {
      
- const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,head,lab,email,Contact,photo,password  }  = req.body
+ const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,head,lab,Contact,photo,password }  = req.body
 
     
     bcrypt.hash(password, 12)
@@ -69,7 +69,7 @@ exports.postSignup = (req, res, next) => {
                 head,
                 lab,
                 Contact,
-                email,
+                
                 password: hashedpwd,
                 photo
             });
@@ -90,20 +90,6 @@ exports.postLogout = (req, res, next) => {
         //redirecting to hommepage
     });
 };
-
-
-exports.updateHosInfo = (req,res) => {
-    const {totalBedsCount,OccupiedBedsCount,email,head,lab,Contact,photo }  = req.body
-
-    Hospital.findByIdAndUpdate(req.hospital._id, {$set : {totalBedsCount,OccupiedBedsCount,head,email,lab,Contact,photo }}, {new : true},
-        (err,result) =>{
-           if(err){
-            return res.status(422).json({error:"Updation Failed"})
-           }
-           res.json({result, message:"Updation done "} )
-        } )
-}
-
 
 exports.addDoctor = (req,res) => {
     const {name ,email , contact , field , qualification  } = req.body;
@@ -135,4 +121,16 @@ exports.listDoctors = (req,res) => {
     Doctor.find({hospital : req.hospital.id}).then(list =>{
         res.json({list})
     }).catch(err => console.log(err))
+}
+
+exports.updateHospInfo = (req,res) => {
+    const {totalBedsCount,OccupiedBedsCount,head,lab,Contact,photo }  = req.body
+
+    Hospital.findByIdAndUpdate(req.hospital._id, {$set : {totalBedsCount,OccupiedBedsCount,head,lab,Contact,photo }}, {new : true},
+        (err,result) =>{
+           if(err){
+            return res.status(422).json({error:"Updation Failed"})
+           }
+           res.json({result, message:"Updation done "} )
+        } )
 }

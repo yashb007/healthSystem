@@ -8,6 +8,14 @@ const doctorSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    email : {
+      type : String,
+      required : true
+    },
+    contact : {
+      type : String,
+      required : true
+    },
     field: {
         type: String,
         required: true

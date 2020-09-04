@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from '../components/elements/Image'
+import { Link } from 'react-router-dom';
 
 
 const Both =( props )=>{
@@ -25,8 +26,8 @@ const Both =( props )=>{
                          alt="Hero"
                          width={270}
                          height={456} />
-                        <button className="button button-primary m-32"><a href="/hospital/login">SignIn</a></button>
-                        <button className="button button-secondary m-32"><a href="/hospital/register">Register</a></button>
+                        <button className="button button-primary m-32"><Link to="/hospital/login">SignIn</Link></button>
+                        <button className="button button-secondary m-32"><Link to="/hospital/register">Register</Link></button>
                     </div>
                     
                     <div className="plit-item-content center-content-mobile">
@@ -37,8 +38,8 @@ const Both =( props )=>{
                          alt="Hero"
                          width={200}
                          height={256} />
-                        <button className="button button-primary m-32"><a href="/lab/login">SignIn</a></button>
-                        <button className="button button-secondary m-32"><a href="/lab/register">Register</a></button>
+                        <button className="button button-primary m-32"><Link to="/lab/login">SignIn</Link></button>
+                        <button className="button button-secondary m-32"><Link to="/lab/register">Register</Link></button>
                     </div>
                 </div>       
             </div>

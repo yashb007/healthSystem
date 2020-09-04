@@ -9,6 +9,9 @@ import LayoutDefault from './layouts/LayoutDefault';
 // Views 
 import Home from './views/Home';
 import Both from './views/Both'
+import Login from './views/Login'
+import Register from './views/Register';
+
 
 const App = () => {
 
@@ -20,6 +23,8 @@ const App = () => {
         <Switch>
           <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
           <AppRoute path="/both" component={Both} layout={LayoutDefault} />
+          <AppRoute path="/hospital/login" component={Login} layout={LayoutDefault} />
+          <AppRoute path="/hospital/register" component={Register} layout={LayoutDefault} />
         </Switch>
       )} />
   );

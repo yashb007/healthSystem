@@ -5,8 +5,8 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const csrf = require('csurf');
-const flash = require('connect-flash');
+//const csrf = require('csurf');
+//const flash = require('connect-flash');
 
 const app = express();
 const store = new MongoDBStore({
@@ -14,10 +14,18 @@ const store = new MongoDBStore({
     collection: 'sessions'
 })
 
-const csrfProtection = csrf();
+//const csrfProtection = csrf();
 
 
 app.use(express.json());
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
@@ -29,13 +37,13 @@ app.use(
     })
 );
 
-app.use(csrfProtection);
-app.use(flash());
+//app.use(csrfProtection);
+//app.use(flash());
 
 
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
-    res.locals.csrfToken = req.csrfToken();
+    // res.locals.csrfToken = req.csrfToken();
     next();
 });
 

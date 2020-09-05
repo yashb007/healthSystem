@@ -1,20 +1,21 @@
 const mongoose = require('mongoose');
-const Hospital = require('./hospital');
-const {ObjectId} = mongoose.Schema.Types
 const Schema = mongoose.Schema;
+const Hospital = require('./hospital');
+const { ObjectId } = mongoose.Schema.Types
+
 
 const doctorSchema = mongoose.Schema({
     name: {
         type: String,
         required: true
     },
-    email : {
-      type : String,
-      required : true
+    email: {
+        type: String,
+        required: true
     },
-    contact : {
-      type : String,
-      required : true
+    contact: {
+        type: String,
+        required: true
     },
     field: {
         type: String,
@@ -24,13 +25,13 @@ const doctorSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    key:{
+    key: {
         type: String,
         required: true
     },
-    hospital:{
+    hospital: {
         type: ObjectId,
-        ref:"Hospital"
+        ref: "Hospital"
     }
 })
 

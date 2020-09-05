@@ -29,7 +29,12 @@ class Register extends Component {
   submitHandle=(e)=>{
     e.preventDefault();
     console.log(this.state);
-    Axios.post('http://localhost:8080/hsp/signup',this.state);
+    Axios.post('http://localhost:8080/hsp/signup',this.state)
+        .then((res)=>{
+          console.log(res);
+        }).catch((err)=>{
+          console.log(err);
+        })
   }
 
   render() {

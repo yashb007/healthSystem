@@ -18,7 +18,16 @@ changeHandle=(e)=>{
 SubmitHandle=(e)=>{
   e.preventDefault();
   console.log(this.state);
-  axios.post('http://localhost:8080/hsp/login',this.state);
+  axios.post('http://localhost:8080/hsp/login',this.state).then((res)=>{
+    if(res.data.login){
+      console.log(this.props);
+      this.props.history.push("/hospital/dashboard")
+    }
+
+  })
+  .catch((err)=>{
+    console.log(err);
+  });
 }
 
 

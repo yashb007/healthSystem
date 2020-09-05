@@ -41,13 +41,14 @@ exports.postLogin = (req, res, next) => {
                     }
                     req.session.hospitalLoggedIn = true;
                     req.session.hospital = hospital;
-                    console.log(req.session,45);
-                    return req.session.save();
-                }).then((data)=>{
-                    res.json({login:true});
+                    console.log(session);
+                    return req.session.save(err => {
+                        console.log(err);
+                        //redirecting page
+                    });
                 })
                 .catch(err => {
-                    // console.log(err);
+                    console.log(err);
                     //redirecting to login page
                 });
         })

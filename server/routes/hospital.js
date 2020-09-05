@@ -19,13 +19,11 @@ router.post('/login', [
 ], hospital.postLogin);
 
 router.post('/signup', [
-    check('hospitalid')
+    check('email')
         .custom((value, { req }) => {
-            return Hospital.findOne({ email: value }).then(HospitalDoc => {
+            return Hospital.findOne({ email:req.body.email }).then(HospitalDoc => {
                 if (HospitalDoc) {
-                    return Promise.reject(
-                        'Hospital exists already.'
-                    );
+                    throw new Error('Hospital Registered Already');
                 }
             });
         }),

@@ -42,7 +42,7 @@ SubmitHandle=(e)=>{
                 <div className="split-item-content center-content-mobile">
                   <h3 className="mt-0 mb-16">Login</h3>
                   <p className="m-0">For Hospitals</p>
-                  <form  onSubmit={this.SubmitHandle}>
+                  <form  onSubmit={this.SubmitHandle} style={{color:"white"}}>
                     <fieldset>
                       <div className="mb-16">
                         <label className="form-label" htmlFor="email">Email</label>

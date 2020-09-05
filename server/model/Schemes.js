@@ -11,6 +11,23 @@ const schemesSchema = mongoose.Schema({
        type:Date,
        required : true
    },
+   description:{
+        type : String,
+        required : true
+   },
+   incomeBarrier:{
+        type : String,
+        required : true
+   },
+   link:{
+        type : String,
+        required : true
+   },
+   benifits:{
+        type : String,
+        required : true
+   }
+
 });
 
 module.exports = mongoose.model('Schemes', schemesSchema);

@@ -2,6 +2,14 @@ const bcrypt = require('bcryptjs');
 const { validationresult } = require('express-validator/check');
 const Hospital = require('../model/hospital');
 const Doctor = require('../model/doctor')
+const nodemailer = require('nodemailer')
+const sendgridTransport = require('nodemailer-sendgrid-transport')
+
+const transporter = nodemailer.createTransport(sendgridTransport({
+    auth:{
+        api_key:"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"
+    }
+}))
 
 exports.getHospById = (req,res,next,id) => {
     Hospital.findById(id).exec((err,hos) => {
@@ -52,7 +60,7 @@ exports.postLogin = (req, res, next) => {
 
 exports.postSignup = (req, res, next) => {
      
- const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,head,lab,email,Contact,photo,password  }  = req.body
+ const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,totalVentiCount,OccupiedVentiCount,head,lab,email,Contact,photo,password}  = req.body
 
     
     bcrypt.hash(password, 12)
@@ -71,7 +79,9 @@ exports.postSignup = (req, res, next) => {
                 Contact,
                 email,
                 password: hashedpwd,
-                photo
+                photo,
+                totalVentiCount,
+                OccupiedVentiCount
             });
             return hospital.save();
         })
@@ -93,9 +103,9 @@ exports.postLogout = (req, res, next) => {
 
 
 exports.updateHosInfo = (req,res) => {
-    const {totalBedsCount,OccupiedBedsCount,email,head,lab,Contact,photo }  = req.body
+    const {totalBedsCount,OccupiedBedsCount,totalVentiCount,OccupiedVentiCount,email,head,lab,Contact,photo }  = req.body
 
-    Hospital.findByIdAndUpdate(req.hospital._id, {$set : {totalBedsCount,OccupiedBedsCount,head,email,lab,Contact,photo }}, {new : true},
+    Hospital.findByIdAndUpdate(req.hospital._id, {$set : {totalBedsCount,OccupiedBedsCount,totalVentiCount,OccupiedVentiCount,head,email,lab,Contact,photo }}, {new : true},
         (err,result) =>{
            if(err){
             return res.status(422).json({error:"Updation Failed"})
@@ -125,6 +135,12 @@ exports.addDoctor = (req,res) => {
          })
          return doctor.save()
      }).then(result => {
+        transporter.sendMail({
+            to:req.body.email,
+            from:"bansaly37@gmail.com",
+            subject:"Registration Completed",
+            html:"<h1>Your private key is  </h1>"+ doctorKey
+        })
          res.json(doctorKey)
      }).catch(err => {
          console.log(err)

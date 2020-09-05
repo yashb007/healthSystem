@@ -1,5 +1,7 @@
 const User = require('../model/user');
 const Hospital = require('../model/hospital');
+const Doctor = require('../model/doctor');
+const Prescription = require('../model/prescription');
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
 
@@ -66,7 +68,6 @@ exports.registerUser = (req, res) => {
         privateKey,
         healthid
     })
-
 };
 
 exports.healthCard = (req, res, next) => {
@@ -85,6 +86,8 @@ exports.healthCard = (req, res, next) => {
         })
 };
 
-
+exports.addPrescription = (req,res) => {
+    const {} = req.body;
+}
 
 //some bug in idea, yet to be discussed & resolved

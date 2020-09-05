@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
+
 const FooterNav = ({
   className,
   ...props
@@ -15,7 +16,7 @@ const FooterNav = ({
   return (
     <nav
       {...props}
-      className={classes}
+      className={classes} 
     >
       <ul className="list-reset">
         <li>

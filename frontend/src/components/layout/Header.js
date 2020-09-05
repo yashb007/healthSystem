@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import Logo from './partials/Logo';
-
+import './navcorrect.css';
 
 const propTypes = {
   navPosition: PropTypes.string,
@@ -105,7 +105,7 @@ const Header = ({
                   classNames(
                     'header-nav',
                     isActive && 'is-active'
-                  )} >
+                  )} id="navcolour">
                 <div className="header-nav-inner">
                   <ul className={
                     classNames(

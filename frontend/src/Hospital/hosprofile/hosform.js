@@ -42,6 +42,12 @@ class Hosform extends Component {
                     <input placeholder="Occupied Beds Count"  type="text" className="  white-text" />
                 </div>
                 <div className="input-field">
+                    <input placeholder="Total Ventillators Count"  type="text" className="  white-text" />
+                </div>
+                <div className="input-field">
+                    <input placeholder="Occupied Ventillators Count"  type="text" className="  white-text" />
+                </div>
+                <div className="input-field">
                     <input placeholder="Head"  type="text" className="  white-text" />
                 </div>
                 <div className="input-field">

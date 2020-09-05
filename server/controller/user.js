@@ -71,7 +71,7 @@ exports.registerUser = (req, res) => {
 
 exports.healthCard = (req, res, next) => {
     const healthid = req.body.healthid;
-    const quickresponse;
+    let quickresponse =null;
 
     axios.get('https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=' + healthid)
         .then(qr => {

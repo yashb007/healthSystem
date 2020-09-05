@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs');
-const { validationresult } = require('express-validator/check');
+const { validationresult } = require('express-validator');
 const Hospital = require('../model/hospital');
-const Doctor = require('../model/doctor')
+const Doctor = require('../model/doctor');
+const session = require('express-session');
 
 exports.getHospById = (req,res,next,id) => {
     Hospital.findById(id).exec((err,hos) => {
@@ -24,20 +25,27 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-
     const {email , password } = req.body
+    
     Hospital.findOne({ email })
         .then(hospital => {
+            if(!hospital){
+                console.log("user not found");
+                return;
+            }
             bcrypt.compare(password, hospital.password)
                 .then(match => {
-                    if (match) {
-                        req.session.hospitalLoggedIn = true;
-                        req.session.hospital = hospital;
-                        return req.session.save(err => {
-                            console.log(err);
-                            //redirecting page
-                        });
+                    if (!match) {
+                        console.log("password not match");
+                        return;
                     }
+                    req.session.hospitalLoggedIn = true;
+                    req.session.hospital = hospital;
+                    console.log(session);
+                    return req.session.save(err => {
+                        console.log(err);
+                        //redirecting page
+                    });
                 })
                 .catch(err => {
                     console.log(err);
@@ -76,6 +84,7 @@ exports.postSignup = (req, res, next) => {
             return hospital.save();
         })
         .then(result => {
+            console.log(result);
             console.log("Hospital registered")
             //redirect to login page
         })

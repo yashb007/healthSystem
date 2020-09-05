@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const { validationresult } = require('express-validator');
+const { validationResult } = require('express-validator');
 const Hospital = require('../model/hospital');
 const Doctor = require('../model/doctor');
 const session = require('express-session');
@@ -60,7 +60,10 @@ exports.postLogin = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
      
  const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,head,lab,email,Contact,photo,password  }  = req.body
-
+const errs=validationResult(req);
+if(errs){
+    res.json({validation:errs})
+}
     
     bcrypt.hash(password, 12)
         .then(hashedpwd => {
@@ -83,8 +86,7 @@ exports.postSignup = (req, res, next) => {
             return hospital.save();
         })
         .then(result => {
-            console.log(result);
-            console.log("Hospital registered")
+                console.log("Hospital registered")
             //redirect to login page
         })
         .catch(err => {

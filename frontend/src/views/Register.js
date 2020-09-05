@@ -31,7 +31,12 @@ class Register extends Component {
     console.log(this.state);
     Axios.post('http://localhost:8080/hsp/signup',this.state)
         .then((res)=>{
-          console.log(res);
+          if(res.data.validation.errors.length > 0){
+            console.log(res.data.validation.errors)
+            alert(`err : ${res.data.validation.errors[0].msg}`);
+          }else{
+            this.props.history.push("/hospital/login"); 
+          }
         }).catch((err)=>{
           console.log(err);
         })
@@ -52,19 +57,19 @@ class Register extends Component {
                       <fieldset>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="name">Hospital Name</label>
-                          <input id="name" onChange={this.changeHandle} className="form-input" type="text" placeholder="Hospital Name" required />
+                          <input id="name" onChange={this.changeHandle} className="form-input white-text" type="text" placeholder="Hospital Name" required />
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="head">Head Name</label>
-                          <input id="head" onChange={this.changeHandle} className="form-input" type="text" placeholder="Head name" required />
+                          <input id="head" onChange={this.changeHandle} className="form-input white-text" type="text" placeholder="Head name" required />
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="email">Email</label>
-                          <input id="email" onChange={this.changeHandle} className="form-input" type="email" placeholder="Email" required />
+                          <input id="email" onChange={this.changeHandle} className="form-input white-text" type="email" placeholder="Email" required />
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="password">Password</label>
-                          <input type="password" onChange={this.changeHandle} id="password" className="form-input" placeholder="Password" />
+                          <input type="password" onChange={this.changeHandle} id="password" className="form-input white-text" placeholder="Password" />
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="type">Hospital Type</label>
@@ -77,35 +82,35 @@ class Register extends Component {
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="state">State</label>
-                          <input id="state" onChange={this.changeHandle} className="form-input" type="text" placeholder="State" required />
+                          <input id="state" onChange={this.changeHandle} className="form-input white-text" type="text" placeholder="State" required />
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="district">District</label>
-                          <input id="district" onChange={this.changeHandle} className="form-input" type="text" placeholder="District" required />
+                          <input id="district" onChange={this.changeHandle} className="form-input white-text" type="text" placeholder="District" required />
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="Tehsil">Tehsil</label>
-                          <input id="Tehsil" onChange={this.changeHandle} className="form-input" type="text" placeholder="Tehsil" required />
+                          <input id="Tehsil" onChange={this.changeHandle} className="form-input white-text" type="text" placeholder="Tehsil" required />
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="address">Address</label>
-                          <textarea id="address" onChange={this.changeHandle} className="form-input" placeholder="Address"></textarea>
+                          <textarea id="address" onChange={this.changeHandle} className="form-input black-text" placeholder="Address"></textarea>
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="totalBedsCount">Total Beds</label>
-                          <input type="number" onChange={this.changeHandle} id="totalBedsCount" className="form-input" placeholder="Total Beds" />
+                          <input type="number" onChange={this.changeHandle} id="totalBedsCount" className="form-input white-text" placeholder="Total Beds" />
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="OccupiedBedsCount">Occupied Beds</label>
-                          <input type="number" onChange={this.changeHandle} id="OccupiedBedsCount" className="form-input" placeholder="Occupied beds" />
+                          <input type="number" onChange={this.changeHandle} id="OccupiedBedsCount" className="form-input white-text" placeholder="Occupied beds" />
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="Contact">Contact Number</label>
-                          <input type="number" onChange={this.changeHandle} id="Contact" className="form-input" placeholder="Contact Number" />
+                          <input type="number" onChange={this.changeHandle} id="Contact" className="form-input white-text" placeholder="Contact Number" />
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="form-message">Photo</label>
-                          <input type="file" id="form-message" className="form-input" placeholder="Click to upload" />
+                          <input type="file" id="form-message" className="form-input white-text" placeholder="Click to upload" />
                         </div>
                         <div className="mt-24">
                           <div className="button-group">

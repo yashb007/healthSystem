@@ -1,0 +1,25 @@
+ /*Doctors*/
+ #team_teamseccards{
+    border-radius: 10px;
+}
+.team_teamsec_bkg{
+    height: 120px;
+}
+.team_teamctnt{
+    position: relative;
+    margin-top: -6rem!important;
+  }
+
+  .team_teamsec_avtr{
+    height: 150px!important;
+    width: 150px!important;
+    padding: 5px;
+    margin-left: 23%;
+    background-color: white;
+    
+}
+
+.team_teamsechd{
+    margin-top: 0!important;
+    color: #151719;
+}

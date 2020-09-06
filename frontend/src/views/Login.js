@@ -47,18 +47,14 @@ SubmitHandle=(e)=>{
                         <label className="form-label" htmlFor="email">Email</label>
                         <div className="has-icon-left">
                           <input className="form-input" id="email" type="text" placeholder="Username" onChange={this.changeHandle}/>
-                          <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="16" height="16" fill="#909CB5" />
-                          </svg>
+                          
                         </div>
                       </div>
                       <div className="mb-16">
                         <label className="form-label" htmlFor="password">Password</label>
                         <div className="has-icon-left">
                           <input className="form-input" id="password" type="password" placeholder="Password" onChange={this.changeHandle}/>
-                          <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="16" height="16" fill="#909CB5" />
-                          </svg>
+                          
                         </div>
                       </div>
                       <div className="mt-24">

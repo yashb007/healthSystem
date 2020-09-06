@@ -11,6 +11,8 @@ router.get('/login', hospital.getLogin);
 
 router.get('/signup', hospital.getSignup);
 
+router.get('/dash',hospital.showHosInfoById);
+
 router.post('/login', [
     body('password', 'Password has to be valid.')
         .isLength({ min: 5 })

@@ -168,7 +168,8 @@ exports.listDoctors = (req, res) => {
 }
 
 exports.showHosInfoById = (req, res) => {
-    Hospital.findOne(req.hospital._id).exec((err, hos) => {
+    console.log(hospital);
+    Hospital.findById(req.hospital._id).exec((err, hos) => {
         if (err) {
             return res.json("No hospital find")
         }

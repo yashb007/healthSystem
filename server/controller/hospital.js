@@ -150,18 +150,15 @@ exports.addDoctor = (req,res) => {
          })
          return doctor.save()
      }).then((err,result) => {
-          if(err){
-              return res.json(err)
-          }
-          else
-{        transporter.sendMail({
+         
+        transporter.sendMail({
             to:req.body.email,
             from:"awesomeraunakbhagat@gmail.com",
             subject:"Registration Completed",
             html:"<h1>Your private key is  </h1>"+ doctorKey
         })
         return res.json({"added" : true})
- }    }).catch(err => {
+    }).catch(err => {
          console.log(err)
      })
 } 

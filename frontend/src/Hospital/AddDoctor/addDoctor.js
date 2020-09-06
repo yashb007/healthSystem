@@ -25,14 +25,14 @@ class AddDoctor extends Component{
         console.log(this.state);
         Axios.post('http://localhost:8080/hsp/addDoctor',this.state)
             .then((res)=>{
-                if(res.err){
-                    console.log(res.err)
+                console.log(res)
+                if(res.data.added){
+                    this.props.history.push("/hosdash"); 
                 }
-              console.log(res)
-                this.props.history.push("/hosdash"); 
-                
-                     alert("not added")
-                 
+              else
+                {
+                alert("not added")
+            }                
             }).catch((err)=>{
               console.log(err);
             })

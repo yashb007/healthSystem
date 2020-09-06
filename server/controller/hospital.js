@@ -35,6 +35,41 @@ exports.getSignup = (req, res, next) => {
     // showing the signup page
 };
 
+// exports.postLogin = (req, res, next) => {
+//     const {email , password } = req.body
+    
+//     Hospital.findOne({ email })
+//         .then(hospital => {
+//             if(!hospital){
+//                 console.log("user not found");
+//                 return;
+//             }
+//             bcrypt.compare(password, hospital.password)
+//                 .then(match => {
+//                     if (!match) {
+//                         console.log("password not match");
+//                         return;
+//                     }
+//                     req.session.hospitalLoggedIn = true;
+//                     req.session.hospital = hospital;
+//                     console.log(req.session);
+//                    return req.session.save()
+//                  //  return res.json({msg : "login"})     //redirecting page
+//                     });
+//                 }).then(data => {
+//                     console.log(data)
+//                     return  res.json({login : true})
+//                 })
+//                 .catch(err => {
+//                     console.log(err);
+//                     //redirecting to login page
+//                 })
+//         .catch(err => {
+//             console.log(err);
+//             //redirecting to login page
+//         });
+// };
+
 exports.postLogin = (req, res, next) => {
     const {email , password } = req.body
     
@@ -52,18 +87,16 @@ exports.postLogin = (req, res, next) => {
                     }
                     req.session.hospitalLoggedIn = true;
                     req.session.hospital = hospital;
-                    console.log(req.session.hospital);
-                   return req.session.save()
-                 //  return res.json({msg : "login"})     //redirecting page
-                    });
-                }).then(data => {
-                    console.log(data)
-                    return  res.json({data})
+                    console.log(req.session,45);
+                    return req.session.save();
+                }).then((data)=>{
+                    res.json({login:true});
                 })
                 .catch(err => {
-                    console.log(err);
+                    // console.log(err);
                     //redirecting to login page
-                })
+                });
+        })
         .catch(err => {
             console.log(err);
             //redirecting to login page

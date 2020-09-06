@@ -22,7 +22,7 @@ SubmitHandle=(e)=>{
     console.log(res)
     if(res.data.login){
       console.log(this.props);
-      this.props.history.push("/hospital/dashboard")
+      this.props.history.push("/hosdash")
     }
   })
   .catch(err=>{

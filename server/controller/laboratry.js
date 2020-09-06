@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const { validationresult } = require('express-validator');
+const { validationResult } = require('express-validator');
 const Laboratry = require('../model/laboratry');
 const Doctor = require('../model/doctor')
 
@@ -52,9 +52,13 @@ exports.postLogin = (req, res, next) => {
 
 exports.postSignup = (req, res, next) => {
      
- const {name,state,district,Tehsil,address,head,email,Contact,photo,password }  = req.body
+ const {name,state,district,Tehsil,address,head,email,Contact,url,password }  = req.body
 
-    
+console.log(req.body)
+const errs=validationResult(req);
+if(errs){
+    res.json({validation:errs})
+}
     bcrypt.hash(password, 12)
         .then(hashedpwd => {
             const lab = new Laboratry({
@@ -67,13 +71,13 @@ exports.postSignup = (req, res, next) => {
                 email,
                 Contact,
                 password: hashedpwd,
-                photo
+                url
             });
             return lab.save();
         })
         .then(result => {
             console.log("Lab registered")
-            //redirect to login page
+          return res.json({msg:"Lab Registered"})
         })
         .catch(err => {
             console.log(err);

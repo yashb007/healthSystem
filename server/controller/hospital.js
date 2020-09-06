@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const { validationresult } = require('express-validator');
+const { validationResult } = require('express-validator');
 const Hospital = require('../model/hospital');
 const Doctor = require('../model/doctor')
 const nodemailer = require('nodemailer')
@@ -71,7 +71,7 @@ exports.postLogin = (req, res, next) => {
 
 exports.postSignup = (req, res, next) => {
      
- const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,totalVentiCount,OccupiedVentiCount,head,lab,email,Contact,photo,password}  = req.body
+ const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,head,lab,email,Contact,url,password}  = req.body
 const errs=validationResult(req);
 if(errs){
     res.json({validation:errs})
@@ -92,16 +92,14 @@ if(errs){
                 Contact,
                 email,
                 password: hashedpwd,
-                photo,
-                totalVentiCount,
-                OccupiedVentiCount
+                url
             });
             return hospital.save();
         })
         .then(result => {
             console.log(result);
             console.log("Hospital registered")
-            //redirect to login page
+            res.json({msg  :"Hospital registered"})
         })
         .catch(err => {
             console.log(err);

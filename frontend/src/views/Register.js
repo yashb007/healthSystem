@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,useState } from 'react';
 import Image from '../components/elements/Image';
 import Axios from 'axios';
 
@@ -18,29 +18,63 @@ class Register extends Component {
     Contact: null,
     email: null,
     password: null,
+    url: null,
+    image:{}
   }
-
+   
   changeHandle=(e)=>{
     this.setState({
       [e.target.id]:e.target.value
     })
   }
 
-  submitHandle=(e)=>{
+  uploadPic = (e) => {
     e.preventDefault();
+    const data = new FormData()
+    data.append("file",this.state.image)
+    data.append("upload_preset","healthSystem")
+    data.append("cloud_name","yashbansal")
+    fetch("	https://api.cloudinary.com/v1_1/yashbansal/image/upload",{
+      method:"POST",
+      body:data
+    }).then(res => res.json())
+    .then(data=> {
+      console.log(data.url)
+      this.setState({url : data.url})
+       
     console.log(this.state);
+    console.log("123")
     Axios.post('http://localhost:8080/hsp/signup',this.state)
         .then((res)=>{
           if(res.data.validation.errors.length > 0){
-            console.log(res.data.validation.errors)
+            console.log(res.data.validation.errors,67)
             alert(`err : ${res.data.validation.errors[0].msg}`);
           }else{
+            console.log("1234")
             this.props.history.push("/hospital/login"); 
           }
         }).catch((err)=>{
-          console.log(err);
-        })
-  }
+          console.log(err,45);
+        }).catch(err => console.log(err))
+      })}
+
+  // submitHandle=(e)=>{
+  //   e.preventDefault();
+  //   console.log(this.state);
+  //   this.uploadPic()
+  //   console.log("123")
+  //   Axios.post('http://localhost:8080/hsp/signup',this.state)
+  //       .then((res)=>{
+  //         if(res.data.validation.errors.length > 0){
+  //           console.log(res.data.validation.errors)
+  //           alert(`err : ${res.data.validation.errors[0].msg}`);
+  //         }else{
+  //           this.props.history.push("/hospital/login"); 
+  //         }
+  //       }).catch((err)=>{
+  //         console.log(err);
+  //       })
+  // }
 
   render() {
     return (
@@ -53,7 +87,7 @@ class Register extends Component {
                   <div className="split-item-content center-content-mobile" style={{ overflowY: "scroll", height: "28rem", overflowX: "hidden" }}>
                     <h3 className="mt-0 mb-16">Register</h3>
                     <p className="m-0">For Hospitals</p>
-                    <form onSubmit={this.submitHandle}>
+                    <form onSubmit={this.uploadPic}>
                       <fieldset>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="name">Hospital Name</label>
@@ -110,7 +144,13 @@ class Register extends Component {
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="form-message">Photo</label>
-                          <input type="file" id="form-message" className="form-input white-text" placeholder="Click to upload" />
+                          <input type="file" id="form-message" className="form-input white-text"
+                           onChange={(e)=> {
+                            console.log(e.target.files[0])
+                             this.state.image = e.target.files[0]
+                             console.log(this.state.image )
+                            }
+                             } placeholder="Click to upload" />
                         </div>
                         <div className="mt-24">
                           <div className="button-group">

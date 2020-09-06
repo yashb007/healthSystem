@@ -35,7 +35,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    privateKey: {
+    privateKey:{
         type: String,
         required: true
     },
@@ -43,6 +43,10 @@ const userSchema = new Schema({
         info: []
     },
     contact:{
+        type: String,
+        required: true
+    },
+    url:{
         type: String,
         required: true
     }

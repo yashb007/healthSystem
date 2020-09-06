@@ -10,14 +10,12 @@ class RegisterLab extends Component {
     district: null,
     Tehsil: null,
     address: null,
-    type: null,
-    totalBedsCount: null,
-    OccupiedBedsCount: null,
     head: null,
-    lab: null,
     Contact: null,
     email: null,
     password: null,
+    url : null,
+    image:{}
   }
 
   changeHandle=(e)=>{
@@ -26,21 +24,56 @@ class RegisterLab extends Component {
     })
   }
 
-  submitHandle=(e)=>{
+
+  uploadPic = (e) => {
     e.preventDefault();
+    const data = new FormData()
+    data.append("file",this.state.image)
+    data.append("upload_preset","healthSystem")
+    data.append("cloud_name","yashbansal")
+    fetch("	https://api.cloudinary.com/v1_1/yashbansal/image/upload",{
+      method:"POST",
+      body:data
+    }).then(res => res.json())
+    .then(data=> {
+      console.log(data.url)
+      this.setState({url : data.url})
+       
     console.log(this.state);
+    console.log("123")
     Axios.post('http://localhost:8080/lab/signup',this.state)
         .then((res)=>{
           if(res.data.validation.errors.length > 0){
-            console.log(res.data.validation.errors)
+            console.log(res.data.validation.errors,67)
             alert(`err : ${res.data.validation.errors[0].msg}`);
           }else{
-            this.props.history.push("/hospital/login"); 
+            console.log("1234")
+            this.props.history.push("/lab/login"); 
           }
         }).catch((err)=>{
-          console.log(err);
-        })
-  }
+          console.log(err,45);
+        }).catch(err => console.log(err))
+      })}
+
+
+  // submitHandle=(e)=>{
+  //   e.preventDefault();
+  //   console.log(this.state);
+  //   console.log("123")
+  //   this.uploadPic();
+  //   Axios.post('http://localhost:8080/lab/signup',this.state)
+  //       .then((res)=>{
+  //         if(res.data.validation.errors.length > 0){
+  //           console.log(res.data.validation.errors,67)
+  //           alert(`err : ${res.data.validation.errors[0].msg}`);
+  //         }else{
+  //           console.log("1234")
+  //           this.props.history.push("/lab/login"); 
+  //         }
+  //       }).catch((err)=>{
+  //         console.log(err,45);
+  //       })
+  
 render(){
   
   return (
@@ -52,11 +85,11 @@ render(){
               <div className="split-item">
                 <div className="split-item-content center-content-mobile" style={{overflowY:"scroll",height:"28rem",overflowX:"hidden"}}>
                   <h3 className="mt-0 mb-16">Register</h3>
-                  <p className="m-0">For Hospitals</p>
-                  <form onSubmit={this.submitHandle}>
+                  <p className="m-0">For Laboratory</p>
+                  <form onSubmit={this.uploadPic}>
                       <fieldset>
                         <div className="mb-16">
-                          <label className="form-label" htmlFor="name">Hospital Name</label>
+                          <label className="form-label" htmlFor="name">Laboratory Name</label>
                           <input id="name" onChange={this.changeHandle} className="form-input white-text" type="text" placeholder="Hospital Name" required />
                         </div>
                         <div className="mb-16">
@@ -70,15 +103,6 @@ render(){
                         <div className="mb-16">
                           <label className="form-label" htmlFor="password">Password</label>
                           <input type="password" onChange={this.changeHandle} id="password" className="form-input white-text" placeholder="Password" />
-                        </div>
-                        <div className="mb-16">
-                          <label className="form-label" htmlFor="type">Hospital Type</label>
-                          <select id="type" onChange={this.changeHandle} className="form-select">
-                            <option hidden>Select</option>
-                            <option>Private</option>
-                            <option>Government</option>
-                            <option>Semi Government</option>
-                          </select>
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="state">State</label>
@@ -97,20 +121,18 @@ render(){
                           <textarea id="address" onChange={this.changeHandle} className="form-input black-text" placeholder="Address"></textarea>
                         </div>
                         <div className="mb-16">
-                          <label className="form-label" htmlFor="totalBedsCount">Total Beds</label>
-                          <input type="number" onChange={this.changeHandle} id="totalBedsCount" className="form-input white-text" placeholder="Total Beds" />
-                        </div>
-                        <div className="mb-16">
-                          <label className="form-label" htmlFor="OccupiedBedsCount">Occupied Beds</label>
-                          <input type="number" onChange={this.changeHandle} id="OccupiedBedsCount" className="form-input white-text" placeholder="Occupied beds" />
-                        </div>
-                        <div className="mb-16">
                           <label className="form-label" htmlFor="Contact">Contact Number</label>
                           <input type="number" onChange={this.changeHandle} id="Contact" className="form-input white-text" placeholder="Contact Number" />
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="form-message">Photo</label>
-                          <input type="file" id="form-message" className="form-input white-text" placeholder="Click to upload" />
+                          <input type="file" id="form-message" className="form-input white-text" placeholder="Click to upload"
+                             onChange={(e)=> {
+                             console.log(e.target.files[0])
+                             this.state.image = e.target.files[0]
+                             console.log(this.state.image )
+                            }}
+                             />
                         </div>
                         <div className="mt-24">
                           <div className="button-group">

@@ -8,6 +8,10 @@ import Hosprofile from './Hospital/hosprofile/hosprofile';
 import AddDoctor from './Hospital/AddDoctor/addDoctor'
 import AddUser from './Hospital/AddUser/addUser';
 import UserPrescription from './Hospital/AddUser/prescription/prescription';
+import AddUserProfile from './Hospital/AddUser/add user profile/adduserprofile';
+
+//Import lab material
+import Lab from './Lab/lab';
 
 // Layouts
 import LayoutDefault from './layouts/LayoutDefault';
@@ -43,6 +47,8 @@ const App = () => {
           <AppRoute path="/adddoctor" component={AddDoctor} />
           <AppRoute path="/adduser" component={AddUser} />
           <AppRoute path="/prescription" component={UserPrescription} />
+          <AppRoute path="/adduserprofile" component={AddUserProfile} />
+          <AppRoute path="/lab" component={Lab} />
 
 
         </Switch>

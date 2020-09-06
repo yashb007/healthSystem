@@ -31,10 +31,10 @@ function Hdashboard() {
                 </div>
             </div>
             <div className="row">
-                <div className="col s12 m6 l6 ">
+                <div className="col s12 m12 l6 ">
                     <Card5 />
                 </div>
-                <div className="col s12 m6 l6 ">
+                <div className="col s12 m12 l6 ">
                     <Card6 />
                 </div>
             </div>

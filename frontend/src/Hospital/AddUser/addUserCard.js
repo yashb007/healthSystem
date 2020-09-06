@@ -13,7 +13,8 @@ class AddUserCard extends Component {
                 <div className="card-content">
                     <h4 className="black-text">Anupam Das</h4>
                     <h5 className="grey-text">#12131424</h5>
-                    <Link to="/prescription" className="btn">Add Prescription</Link>
+                    <Link to="/prescription" className="btn">Add Prescription</Link> <br /><br />
+                    <Link to="#" className="btn">View report</Link>
                 </div> 
             </div>
         );

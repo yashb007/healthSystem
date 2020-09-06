@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-// import Image from '../../elements/Image';
+import Image from '../../elements/Image';
 
 const Logo = ({
   className,
@@ -20,7 +20,13 @@ const Logo = ({
     >
       <h1 className="m-2">
         <Link to="/">
-          <p style={{color:'whitesmoke',fontWeight:"bold",fontSize:"1.5rem"}}>HealthSystem</p>
+          {/* <p style={{color:'whitesmoke',fontWeight:"bold",fontSize:"1.5rem"}}>HealthSystem</p> */}
+          <Image
+            className="has-shadow"
+            src={require('../../../assets/images/logo.png')}
+            alt="logo"
+            width={175}
+            height={175} />
         </Link>
       </h1>
     </div>

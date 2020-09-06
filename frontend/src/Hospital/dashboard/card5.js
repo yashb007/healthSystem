@@ -16,7 +16,8 @@ class Card5 extends Component {
             <div className="row">
                 <div className="col s6 center" id="r2_cards_c"  >
                     <i className="fas fa-hospital-user large " id="r2_icon"></i><br />
-                    <Link to="/adduser" className="btn z-depth-3" id="r2_btn">add user</Link>
+                    <Link to="/adduserprofile" className="btn z-depth-3" id="r2_btn">Add new user</Link>&nbsp;
+                    <Link to="/adduser" className="btn z-depth-3" id="r2_btn">Search user</Link>
                 </div>
                 <div className="col s6 " id="r2_c_cimg">
 

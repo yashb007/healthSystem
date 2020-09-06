@@ -1,9 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Image from '../components/elements/Image';
-import LoginForm from '../components/sections/Login-form';
+import axios from 'axios';
+
+class Login extends Component {
+
+state={
+  email:null,
+  password:null
+}
+
+changeHandle=(e)=>{
+  this.setState({
+    [e.target.id]:e.target.value
+  })
+}
+
+SubmitHandle=(e)=>{
+  e.preventDefault();
+  console.log(this.state);
+  axios.post('http://localhost:8080/hsp/login',this.state).then((res)=>{
+    if(res.data.login){
+      console.log(this.props);
+      this.props.history.push("/hospital/dashboard")
+    }
+
+  })
+  .catch((err)=>{
+    console.log(err);
+  });
+}
 
 
-const Login = (props) => {
+  render(){
   return (
     <>
       <section className="section center-content">
@@ -14,7 +42,33 @@ const Login = (props) => {
                 <div className="split-item-content center-content-mobile">
                   <h3 className="mt-0 mb-16">Login</h3>
                   <p className="m-0">For Hospitals</p>
-                  <LoginForm />
+                  <form  onSubmit={this.SubmitHandle} style={{color:"white"}}>
+                    <fieldset>
+                      <div className="mb-16">
+                        <label className="form-label" htmlFor="email">Email</label>
+                        <div className="has-icon-left">
+                          <input className="form-input" id="email" type="text" placeholder="Username" onChange={this.changeHandle}/>
+                          <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="16" height="16" fill="#909CB5" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="mb-16">
+                        <label className="form-label" htmlFor="password">Password</label>
+                        <div className="has-icon-left">
+                          <input className="form-input" id="password" type="password" placeholder="Password" onChange={this.changeHandle}/>
+                          <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="16" height="16" fill="#909CB5" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div className="mt-24">
+                        <div className="button-group">
+                          <button className="button button-primary">Submit</button>
+                        </div> 
+                      </div>
+                    </fieldset>
+                  </form>
                 </div>
                 <div className="split-item-image">
                   <Image
@@ -25,14 +79,13 @@ const Login = (props) => {
                     height={700} />
                 </div>
               </div>
-
             </div>
-
           </div>
         </div>
       </section>
     </>
   )
+}
 }
 
 export default Login;

@@ -2,7 +2,9 @@ import React, { useRef} from 'react';
 import {  Switch } from 'react-router-dom';
 import AppRoute from './utils/AppRoute';
 import ScrollReveal from './utils/ScrollReveal';
-
+import Hdashboard from './Hospital/dashboard/Dashboard';
+import Doctorlist from './Hospital/doctorlist/doctorlist';
+import Hosprofile from './Hospital/hosprofile/hosprofile';
 // Layouts
 import LayoutDefault from './layouts/LayoutDefault';
 
@@ -16,8 +18,9 @@ import LoginLab from './views/LoginLab';
 
 
 const App = () => {
-
+  
   const childRef = useRef();
+  
   return (
     <ScrollReveal
       ref={childRef}
@@ -29,6 +32,10 @@ const App = () => {
           <AppRoute path="/hospital/register" signin="/hospital/login" reg="/hospital/register" component={Register} layout={LayoutDefault} />
           <AppRoute path="/lab/login" signin="/lab/login" reg="/lab/register" component={LoginLab} layout={LayoutDefault} />
           <AppRoute path="/lab/register" signin="/lab/login" reg="/lab/register" component={RegisterLab} layout={LayoutDefault} />
+          <AppRoute path="/hosdash" component={Hdashboard} />
+          <AppRoute path="/doclist" component={Doctorlist} />
+          <AppRoute path="/hosprofile" component={Hosprofile} />
+
         </Switch>
       )} />
   );

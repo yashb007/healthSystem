@@ -1,0 +1,27 @@
+.blgs_srch_icon{
+    position: relative;
+    margin-top: 0.5rem;
+    color: #4a536b  ;
+  }
+.d_bkg{
+    background-image: url(./img//Component\ 1\ –\ 1.png)!important;
+    background-repeat: no-repeat;
+    height: 30vh;
+}
+#d_img{
+    height: 10rem;
+}
+#d_r1{
+    margin-top:9% ;
+    
+}
+
+#d_srch{
+    color: #4a536b!important;
+    background-color:white ;
+    position: relative;
+    margin-right:0.5rem!important ;
+    border-radius: 1rem;
+    
+    border: #4a536b solid thin;
+}

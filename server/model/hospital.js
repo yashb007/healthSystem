@@ -26,7 +26,7 @@ const hospitalSchema = new Schema({
     type: {
         type: String,
         required: true,
-        enum: ['Government', 'Private']
+        enum: ['Government', 'Private','Semi Government']
     },
     totalBedsCount: {
         type: Number,
@@ -50,10 +50,6 @@ const hospitalSchema = new Schema({
     },
     head: {
         type: String,
-        required: true
-    },
-    lab: {
-        type: Boolean,
         required: true
     },
     Contact: {

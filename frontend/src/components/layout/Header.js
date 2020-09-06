@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import Logo from './partials/Logo';
+import './navcorrect.css';
 
 const propTypes = {
   navPosition: PropTypes.string,
@@ -12,7 +13,7 @@ const propTypes = {
   bottomDivider: PropTypes.bool
 }
 
-const defaultProps = {
+const defaultProps = {  
   navPosition: '',
   hideNav: false,
   hideSignin: false,
@@ -104,7 +105,7 @@ const Header = ({
                   classNames(
                     'header-nav',
                     isActive && 'is-active'
-                  )}>
+                  )} id="navcolour">
                 <div className="header-nav-inner">
                   <ul className={
                     classNames(
@@ -117,7 +118,7 @@ const Header = ({
                   </ul>
                   {!hideSignin &&
                     <ul
-                      className="list-reset header-nav-right"
+                      className="list-reset header-nav-right" 
                     >
                       <li>
                         <Link to={props.reg} className="button button-primary button-wide-mobile button-sm" onClick={closeMenu}>Register</Link>

@@ -1,5 +1,5 @@
 const express = require('express');
-const { check, body } = require('express-validator/check');
+const { check, body } = require('express-validator');
 const router = express.Router();
 const Hospital = require('../model/hospital');
 
@@ -21,11 +21,9 @@ router.post('/login', [
 router.post('/signup', [
     check('email')
         .custom((value, { req }) => {
-            return Hospital.findOne({ email: value }).then(HospitalDoc => {
+            return Hospital.findOne({ email:req.body.email }).then(HospitalDoc => {
                 if (HospitalDoc) {
-                    return Promise.reject(
-                        'Hospital exists already.'
-                    );
+                    throw new Error('Hospital Registered Already');
                 }
             });
         }),

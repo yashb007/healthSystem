@@ -10,7 +10,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const store = new MongoDBStore({
-    uri: 'mongodb+srv://yash:6oGsJUbNFKXUie00@cluster0.zjc3f.mongodb.net/test',
+    uri: 'mongodb+srv://root:9755@cluster0.n1q9f.mongodb.net/health',
     collection: 'sessions'
 })
 
@@ -57,7 +57,7 @@ app.use('/hsp', hspRoutes);                    //for hospital authentication rou
 app.use('/lab', labRoutes);                    //for hospital authentication routes will be - /hsp/something*
 
 
-mongoose.connect("mongodb+srv://yash:6oGsJUbNFKXUie00@cluster0.zjc3f.mongodb.net/<dbname>?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://root:9755@cluster0.n1q9f.mongodb.net/health?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true

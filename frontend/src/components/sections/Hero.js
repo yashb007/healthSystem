@@ -70,7 +70,7 @@ const Hero = ({
                 </p>
               <div className="reveal-from-bottom" data-reveal-delay="600">
                 <ButtonGroup>
-                  <Button tag="a" color="primary" wideMobile>
+                  <Button color="primary" wideMobile>
                     <Link to="/both">Register</Link>
                     </Button>
                   <Button tag="a" color="dark" wideMobile href="https://github.com/yashb007/healthSystem">

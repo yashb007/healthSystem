@@ -25,7 +25,8 @@ const Footer = ({
   const classes = classNames(
     'site-footer center-content-mobile',
     topOuterDivider && 'has-top-divider',
-    className
+    className,
+    
   );
 
   return (

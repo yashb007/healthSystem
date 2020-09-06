@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
-const { validationresult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 const Hospital = require('../model/hospital');
+<<<<<<< HEAD
 const Doctor = require('../model/doctor')
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
@@ -10,6 +11,10 @@ const transporter = nodemailer.createTransport(sendgridTransport({
         api_key:"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"
     }
 }))
+=======
+const Doctor = require('../model/doctor');
+const session = require('express-session');
+>>>>>>> 0c3974c80a1bfb84db7b90321e268a91633219fb
 
 exports.getHospById = (req,res,next,id) => {
     Hospital.findById(id).exec((err,hos) => {
@@ -32,23 +37,29 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-
     const {email , password } = req.body
+    
     Hospital.findOne({ email })
         .then(hospital => {
+            if(!hospital){
+                console.log("user not found");
+                return;
+            }
             bcrypt.compare(password, hospital.password)
                 .then(match => {
-                    if (match) {
-                        req.session.hospitalLoggedIn = true;
-                        req.session.hospital = hospital;
-                        return req.session.save(err => {
-                            console.log(err);
-                            //redirecting page
-                        });
+                    if (!match) {
+                        console.log("password not match");
+                        return;
                     }
+                    req.session.hospitalLoggedIn = true;
+                    req.session.hospital = hospital;
+                    console.log(req.session,45);
+                    return req.session.save();
+                }).then((data)=>{
+                    res.json({login:true});
                 })
                 .catch(err => {
-                    console.log(err);
+                    // console.log(err);
                     //redirecting to login page
                 });
         })
@@ -60,8 +71,16 @@ exports.postLogin = (req, res, next) => {
 
 exports.postSignup = (req, res, next) => {
      
+<<<<<<< HEAD
  const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,totalVentiCount,OccupiedVentiCount,head,lab,email,Contact,photo,password}  = req.body
 
+=======
+ const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,head,lab,email,Contact,photo,password  }  = req.body
+const errs=validationResult(req);
+if(errs){
+    res.json({validation:errs})
+}
+>>>>>>> 0c3974c80a1bfb84db7b90321e268a91633219fb
     
     bcrypt.hash(password, 12)
         .then(hashedpwd => {
@@ -86,7 +105,7 @@ exports.postSignup = (req, res, next) => {
             return hospital.save();
         })
         .then(result => {
-            console.log("Hospital registered")
+                console.log("Hospital registered")
             //redirect to login page
         })
         .catch(err => {

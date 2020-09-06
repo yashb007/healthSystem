@@ -29,7 +29,7 @@ class Header extends Component {
                     <li>
                         <div className="user-view">
                             <div className="background">
-                                <img src={image1} className="responsive-img center" />
+                                <img src={image1} className="responsive-img center" alt="dw" />
                             </div>
                             <Link to="#!user"><img className="circle " src={image2} /></Link>
                             <Link to="#!name"><span className="white-text name">John Doe</span></Link>
@@ -40,7 +40,7 @@ class Header extends Component {
                     <li><div className="divider "></div></li>
                     <li><Link className="waves-effect" to="hosprofile"><i className="material-icons">create</i>Edit Profile</Link></li>
                     <li><div className="divider "></div></li>
-                    <li><Link className="header">Account Controls</Link></li>            
+                    <li><Link to="#" className="header">Account Controls</Link></li>            
                     <li><Link className="waves-effect" to="index"><i className="material-icons">arrow_back</i>Logout</Link></li>
                     <li><div className="divider "></div></li>
                 </ul>

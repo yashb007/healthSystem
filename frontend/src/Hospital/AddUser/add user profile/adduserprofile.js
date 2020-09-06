@@ -17,7 +17,7 @@ class AddUserProfile extends Component {
         district: null,
         Tehsil: null,
         address: null,
-        Contact: null,
+        contact: null,
         email: null,
         dob: null,
         aadhaar: null,
@@ -48,13 +48,8 @@ class AddUserProfile extends Component {
                 console.log("123")
                 Axios.post('http://localhost:8080/user/register', this.state)
                     .then((res) => {
-                        if (res.data.validation.errors.length > 0) {
-                            console.log(res.data.validation.errors, 67)
-                            alert(`err : ${res.data.validation.errors[0].msg}`);
-                        } else {
                             console.log("1234")
-                            this.props.history.push("/hospital/login");
-                        }
+                            this.props.history.push("/hosdash");
                     }).catch((err) => {
                         console.log(err, 45);
                     }).catch(err => console.log(err))
@@ -72,6 +67,7 @@ class AddUserProfile extends Component {
                         <h4 className="center">Add new user profile here..</h4>
                         <p className="center">You will be adding a new here...</p>
                         <form className="col s12" id="addUp_form" onSubmit={this.uploadPic}>
+                        <fieldset>
                             <div className="row">
                                         <input type="file" id="form-message" className="form-input white-text"
                                             onChange={(e) => {
@@ -89,13 +85,13 @@ class AddUserProfile extends Component {
                             </div>
                             <div className="row">
                                 <div className="input-field col s12 prescp">
-                                    <input id="name_of_patient" onChange={this.changeHandle} type="text" className="validate white-text " />
-                                    <label htmlFor="name_of_patient">DOB</label>
+                                    <input id="dob" onChange={this.changeHandle} type="text" className="validate white-text " />
+                                    <label htmlFor="dob">DOB</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12 prescp">
-                                    <input id="adhaar" onChange={this.changeHandle} type="text" className="validate white-text " />
+                                    <input id="aadhaar" onChange={this.changeHandle} type="text" className="validate white-text " />
                                     <label htmlFor="adhaar">Adhaar Number</label>
                                 </div>
                             </div>
@@ -108,30 +104,31 @@ class AddUserProfile extends Component {
                             </div>
                             <div className="row">
                                 <div className="input-field col s12 prescp">
-                                    <input id="medicine_name" onChange={this.changeHandle} type="text" className="validate white-text " />
-                                    <label htmlFor="medicine_name">District</label>
+                                    <input id="district" onChange={this.changeHandle} type="text" className="validate white-text " />
+                                    <label htmlFor="district">District</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12 prescp">
-                                    <input id="strengthofmed" onChange={this.changeHandle} type="text" className="validate white-text " />
-                                    <label htmlFor="strengthofmed">Tehsil</label>
+                                    <input id="Tehsil" onChange={this.changeHandle} type="text" className="validate white-text " />
+                                    <label htmlFor="Tehsil">Tehsil</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12 prescp">
-                                    <input id="Doseofmeditation" onChange={this.changeHandle} type="text" className="validate white-text " />
-                                    <label htmlFor="Doseofmeditation">Address</label>
+                                    <input id="address" onChange={this.changeHandle} type="text" className="validate white-text " />
+                                    <label htmlFor="address">Address</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12 prescp">
-                                    <input id="cnum" type="text" onChange={this.changeHandle} className="validate white-text " />
-                                    <label htmlFor="cnum">Contact Number</label>
+                                    <input id="contact" type="text" onChange={this.changeHandle} className="validate white-text " />
+                                    <label htmlFor="contact">Contact Number</label>
                                 </div>
                             </div>
 
-                            <div className="center"><Link to="/hosdash" className="btn ">Submit</Link></div>
+                            <div className="center ">  <button className="btn addDocbtn">Submit</button> </div>
+                            </fieldset>
 
                         </form>
                     </div>

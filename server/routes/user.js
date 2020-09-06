@@ -9,6 +9,8 @@ router.post('/searchuser',user.getUserbyHealthId)
 
 router.post('/sendotp',user.sendOtp)
 
+router.post('/register',user.registerUser)
+
 router.post('/verify',user.verifyOtp)
 
 // router.get('/checkup/:healthid', userauth, user.getCheckup);

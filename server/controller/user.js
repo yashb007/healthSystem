@@ -42,7 +42,7 @@ exports.getUserbyHealthId = (req, res,next) => {
 }
 
 exports.registerUser = (req, res) => {
-    const { name, dob, aadhaar, state, district, Tehsil, address , contact } = req.body
+    const { name, dob, aadhaar, state, district, Tehsil, address , contact, url } = req.body
 
     const privateKey = uuidv4();
 
@@ -69,7 +69,8 @@ exports.registerUser = (req, res) => {
         address,
         privateKey,
         healthid,
-        contact
+        contact,
+        url
     });
     user.save().then(result => {
         return res.json({result})

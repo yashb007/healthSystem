@@ -50,11 +50,12 @@ app.use((req, res, next) => {
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const hspRoutes = require('./routes/hospital');
+const labRoutes = require('./routes/lab')
 
 app.use('/user', userRoutes);                  //for user information routes will be - /user/something*
 app.use('/auth', authRoutes);                  //for user authentication routes will be - /auth/something*
 app.use('/hsp', hspRoutes);                    //for hospital authentication routes will be - /hsp/something*
-app.use('/lab', labRoutes);                    //for hospital authentication routes will be - /hsp/something*
+app.use('/lab', labRoutes);                    //for lab authentication routes will be - /lab/something*
 
 
 mongoose.connect("mongodb+srv://root:9755@cluster0.n1q9f.mongodb.net/health?retryWrites=true&w=majority", {
@@ -69,4 +70,3 @@ mongoose.connect("mongodb+srv://root:9755@cluster0.n1q9f.mongodb.net/health?retr
     .catch(err => {
         console.log("OOOPS NOT CONNECTED", err);
     });
-//6oGsJUbNFKXUie00

@@ -90,7 +90,7 @@ render(){
                       <fieldset>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="name">Laboratory Name</label>
-                          <input id="name" onChange={this.changeHandle} className="form-input white-text" type="text" placeholder="Hospital Name" required />
+                          <input id="name" onChange={this.changeHandle} className="form-input white-text" type="text" placeholder="Laboratory Name" required />
                         </div>
                         <div className="mb-16">
                           <label className="form-label" htmlFor="head">Head Name</label>

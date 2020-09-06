@@ -58,23 +58,6 @@ class Register extends Component {
         }).catch(err => console.log(err))
       })}
 
-  // submitHandle=(e)=>{
-  //   e.preventDefault();
-  //   console.log(this.state);
-  //   this.uploadPic()
-  //   console.log("123")
-  //   Axios.post('http://localhost:8080/hsp/signup',this.state)
-  //       .then((res)=>{
-  //         if(res.data.validation.errors.length > 0){
-  //           console.log(res.data.validation.errors)
-  //           alert(`err : ${res.data.validation.errors[0].msg}`);
-  //         }else{
-  //           this.props.history.push("/hospital/login"); 
-  //         }
-  //       }).catch((err)=>{
-  //         console.log(err);
-  //       })
-  // }
 
   render() {
     return (

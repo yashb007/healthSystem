@@ -52,17 +52,18 @@ exports.postLogin = (req, res, next) => {
                     }
                     req.session.hospitalLoggedIn = true;
                     req.session.hospital = hospital;
-                    console.log(session);
-                    return req.session.save(err => {
-                        console.log(err);
-                        //redirecting page
+                    console.log(req.session.hospital);
+                   return req.session.save()
+                 //  return res.json({msg : "login"})     //redirecting page
                     });
+                }).then(data => {
+                    console.log(data)
+                    return  res.json({data})
                 })
                 .catch(err => {
                     console.log(err);
                     //redirecting to login page
-                });
-        })
+                })
         .catch(err => {
             console.log(err);
             //redirecting to login page

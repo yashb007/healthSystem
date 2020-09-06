@@ -5,11 +5,22 @@ import { Link } from 'react-router-dom';
 import image1 from '../img/clinic-2921858_1920.jpg';
 import image2 from '../img/heart-care-1040250_1280.jpg';
 import './nav.css';
+import Axios from 'axios';
 
 
 class Header extends Component {
+    state={
+        info:null
+    }
     componentDidMount(){
         M.AutoInit();
+        Axios.get('http://localhost:8080/hsp/dash')
+              .then((data)=>{
+                    this.setState({
+                            info:data
+                    });
+                    console.log(data);
+              })
     }
     render(){
         return(

@@ -4,6 +4,7 @@ const Doctor = require('../model/doctor');
 const Prescription = require('../model/prescription');
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
+const messagebird = require('messagebird')('3hXe6Ng7LdChjrn3NYjXio4w4');
 
 exports.getCheckup = (req, res, next) => {
     const healthid = req.params.healthid;
@@ -27,7 +28,7 @@ exports.getUserById = (req, res, next, id) => {
     })
 }
 
-exports.getUserbyHealthId = (req, res) => {
+exports.getUserbyHealthId = (req, res,next) => {
     User.findOne({ healthid: req.body.healthid }, (err, user) => {
         if (err || !user) {
             return res.status(400).json({
@@ -35,12 +36,13 @@ exports.getUserbyHealthId = (req, res) => {
             }
             )
         }
-        req.user = user
+        req.user = user;
+         return res.json(req.user)
     })
 }
 
 exports.registerUser = (req, res) => {
-    const { name, dob, aadhaar, state, district, Tehsil, address } = req.body
+    const { name, dob, aadhaar, state, district, Tehsil, address , contact } = req.body
 
     const privateKey = uuidv4();
 
@@ -66,7 +68,8 @@ exports.registerUser = (req, res) => {
         Tehsil,
         address,
         privateKey,
-        healthid
+        healthid,
+        contact
     })
 };
 
@@ -86,8 +89,36 @@ exports.healthCard = (req, res, next) => {
         })
 };
 
-exports.addPrescription = (req,res) => {
-    const {} = req.body;
+
+
+exports.sendOtp = (req,res) => {
+    var number = req.user.contact;
+    messagebird.verify.create(number, {
+        originator : 'Code',
+        template : 'Your verification code is ' + token
+    }, function (err, response) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(response);
+            res.render('step2', {
+                id : response.id
+            });
+}
+    })}
+
+exports.verifyOtp = (req,res) => {
+    var id = req.body.id;
+    var token = req.body.token;
+    messagebird.verify.verify(id, token, function(err, response) {
+      if (err) {
+        console.log(err);
+       return res.json({"verify":false})
+      } else {
+        console.log(response);
+       return res.json({"verify":true})
+      }
+    });
 }
 
 //some bug in idea, yet to be discussed & resolved

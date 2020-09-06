@@ -5,7 +5,11 @@ const { ObjectId } = mongoose.Schema.Types
 
 
 const doctorSchema = mongoose.Schema({
-    name: {
+    firstname: {
+        type: String,
+        required: true
+    },
+    lastname: {
         type: String,
         required: true
     },
@@ -21,7 +25,7 @@ const doctorSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    Qualification: {
+    qualification: {
         type: String,
         required: true
     },

@@ -41,6 +41,10 @@ const userSchema = new Schema({
     },
     medical: {
         info: []
+    },
+    contact:{
+        type: String,
+        required: true
     }
 });
 

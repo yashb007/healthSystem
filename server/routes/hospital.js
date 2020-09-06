@@ -40,4 +40,6 @@ router.post('/signup', [
 
 router.post('/logout', hospital.postLogout);
 
+router.post('/addDoctor', hospital.addDoctor);
+
 module.exports = router;

@@ -43,8 +43,6 @@ const App = () => {
           <AppRoute path="/adddoctor" component={AddDoctor} />
           <AppRoute path="/adduser" component={AddUser} />
           <AppRoute path="/prescription" component={UserPrescription} />
-
-
         </Switch>
       )} />
   );

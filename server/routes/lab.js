@@ -40,4 +40,6 @@ router.post('/signup', [
 
 router.post('/logout', lab.postLogout);
 
+//router.post('/addreport',lab.addreport)
+
 module.exports = router;

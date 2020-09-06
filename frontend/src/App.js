@@ -5,6 +5,10 @@ import ScrollReveal from './utils/ScrollReveal';
 import Hdashboard from './Hospital/dashboard/Dashboard';
 import Doctorlist from './Hospital/doctorlist/doctorlist';
 import Hosprofile from './Hospital/hosprofile/hosprofile';
+import AddDoctor from './Hospital/AddDoctor/addDoctor'
+import AddUser from './Hospital/AddUser/addUser';
+import UserPrescription from './Hospital/AddUser/prescription/prescription';
+
 // Layouts
 import LayoutDefault from './layouts/LayoutDefault';
 
@@ -15,6 +19,7 @@ import Login from './views/Login'
 import Register from './views/Register';
 import RegisterLab from './views/RegisterLab';
 import LoginLab from './views/LoginLab';
+import Prescription from './Hospital/AddUser/prescription/prescription';
 
 
 const App = () => {
@@ -35,6 +40,10 @@ const App = () => {
           <AppRoute path="/hosdash" component={Hdashboard} />
           <AppRoute path="/doclist" component={Doctorlist} />
           <AppRoute path="/hosprofile" component={Hosprofile} />
+          <AppRoute path="/adddoctor" component={AddDoctor} />
+          <AppRoute path="/adduser" component={AddUser} />
+          <AppRoute path="/prescription" component={UserPrescription} />
+
 
         </Switch>
       )} />

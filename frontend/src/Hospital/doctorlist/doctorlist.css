@@ -4,24 +4,25 @@
     color: #4a536b  ;
   }
 .d_bkg{
-    background-image: url(./img//Component\ 1\ –\ 1.png)!important;
+  
     background-repeat: no-repeat;
     height: 30vh;
 }
+#dlist_col1{
+    padding:3rem;
+}
 #d_img{
-    height: 10rem;
+    margin-top: 5%;
+    height: 30rem;
 }
-#d_r1{
-    margin-top:9% ;
-    
-}
+
 
 #d_srch{
     color: #4a536b!important;
     background-color:white ;
     position: relative;
     margin-right:0.5rem!important ;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     
     border: #4a536b solid thin;
 }

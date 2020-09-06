@@ -32,9 +32,16 @@ class Hosform extends Component {
                 <div className="input-field">
                     <input placeholder="Address"  type="text" className="  white-text" />
                 </div>
-                <div className="input-field">
-                    <input placeholder="Type"  type="text" className="  white-text" />
+                <div className="input-field white" >
+                    <select >
+                    <option value="" disabled selected id="selecttype"> &nbsp;Type</option>
+                    <option value="1">Private</option>
+                    <option value="2">Government</option>
+                    <option value="3">Semi-Government</option>
+                    </select>
+                    
                 </div>
+                
                 <div className="input-field">
                     <input placeholder="Total Beds Count"  type="text" className="  white-text" />
                 </div>

@@ -1,20 +1,17 @@
 const bcrypt = require('bcryptjs');
-const { validationResult } = require('express-validator');
+const { validationresult } = require('express-validator');
 const Hospital = require('../model/hospital');
-<<<<<<< HEAD
 const Doctor = require('../model/doctor')
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
 
 const transporter = nodemailer.createTransport(sendgridTransport({
     auth:{
-        api_key:"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"
+        api_key:"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"
     }
 }))
-=======
 const Doctor = require('../model/doctor');
 const session = require('express-session');
->>>>>>> 0c3974c80a1bfb84db7b90321e268a91633219fb
 
 exports.getHospById = (req,res,next,id) => {
     Hospital.findById(id).exec((err,hos) => {
@@ -53,13 +50,14 @@ exports.postLogin = (req, res, next) => {
                     }
                     req.session.hospitalLoggedIn = true;
                     req.session.hospital = hospital;
-                    console.log(req.session,45);
-                    return req.session.save();
-                }).then((data)=>{
-                    res.json({login:true});
+                    console.log(session);
+                    return req.session.save(err => {
+                        console.log(err);
+                        //redirecting page
+                    });
                 })
                 .catch(err => {
-                    // console.log(err);
+                    console.log(err);
                     //redirecting to login page
                 });
         })
@@ -71,17 +69,11 @@ exports.postLogin = (req, res, next) => {
 
 exports.postSignup = (req, res, next) => {
      
-<<<<<<< HEAD
  const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,totalVentiCount,OccupiedVentiCount,head,lab,email,Contact,photo,password}  = req.body
-
-=======
- const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,head,lab,email,Contact,photo,password  }  = req.body
 const errs=validationResult(req);
 if(errs){
     res.json({validation:errs})
 }
->>>>>>> 0c3974c80a1bfb84db7b90321e268a91633219fb
-    
     bcrypt.hash(password, 12)
         .then(hashedpwd => {
             const hospital = new Hospital({
@@ -105,7 +97,8 @@ if(errs){
             return hospital.save();
         })
         .then(result => {
-                console.log("Hospital registered")
+            console.log(result);
+            console.log("Hospital registered")
             //redirect to login page
         })
         .catch(err => {
@@ -156,7 +149,7 @@ exports.addDoctor = (req,res) => {
      }).then(result => {
         transporter.sendMail({
             to:req.body.email,
-            from:"bansaly37@gmail.com",
+            from:"awesomeraunakbhagat@gmail.com",
             subject:"Registration Completed",
             html:"<h1>Your private key is  </h1>"+ doctorKey
         })

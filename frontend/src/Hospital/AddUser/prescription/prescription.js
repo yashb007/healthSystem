@@ -76,10 +76,16 @@ class UserPrescription  extends Component {
                             </div>
                             <div className="row">
                                 <div className="input-field col s12 prescp">
-                                    <input id="DoctorKey" type="text" className="validate white-text " />
-                                    <label for="DoctorKey">Doctor Key</label>
+                                    <input id="DoctorEmail" type="email" className="validate white-text " />
+                                    <label for="DoctorEmail">Doctor Email </label>
                                 </div>
                             </div>
+                            <div className="row">
+                            <div className="input-field col s12 prescp">
+                                <input id="DoctorKey" type="text" className="validate white-text " />
+                                <label for="DoctorKey">Doctor Key</label>
+                            </div>
+                        </div>
                             <div className="center"><Link to="/hosdash" className="btn ">Submit</Link></div>
                             
                         </form>

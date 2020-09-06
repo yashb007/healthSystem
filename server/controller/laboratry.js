@@ -108,7 +108,6 @@ exports.showLabInfoById = (req,res) => {
     } )
 }
 
-
 exports.addTests = (req,res) => {
        const {test} = req.body;
        Laboratry.findByIdAndUpdate(req.lab._id,{

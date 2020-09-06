@@ -10,16 +10,16 @@ const path = require('path');
 const fs = require('fs');
 
 const transporter = nodemailer.createTransport(sendgridTransport({
-    auth:{
-        api_key:"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"
+    auth: {
+        api_key: "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"
     }
 }))
 
-exports.getHospById = (req,res,next,id) => {
-    Hospital.findById(id).exec((err,hos) => {
-        if(err || !hos){
+exports.getHospById = (req, res, next, id) => {
+    Hospital.findById(id).exec((err, hos) => {
+        if (err || !hos) {
             return res.status(400).json({
-                error : "No hospital  found in db"
+                error: "No hospital  found in db"
             })
         }
         req.hospital = hos;
@@ -36,11 +36,11 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-    const {email , password } = req.body
-    
+    const { email, password } = req.body
+
     Hospital.findOne({ email })
         .then(hospital => {
-            if(!hospital){
+            if (!hospital) {
                 console.log("user not found");
                 return;
             }
@@ -52,18 +52,17 @@ exports.postLogin = (req, res, next) => {
                     }
                     req.session.hospitalLoggedIn = true;
                     req.session.hospital = hospital;
-                    console.log(req.session.hospital);
-                   return req.session.save()
-                 //  return res.json({msg : "login"})     //redirecting page
-                    });
-                }).then(data => {
-                    console.log(data)
-                    return  res.json({data})
-                })
-                .catch(err => {
-                    console.log(err);
-                    //redirecting to login page
-                })
+                    console.log(req.session);
+                    return req.session.save()
+                    //  return res.json({msg : "login"})     //redirecting page
+                }).then((data) => {
+                    res.json({ login: true });
+                });
+        })
+        .catch(err => {
+            console.log(err);
+            //redirecting to login page
+        })
         .catch(err => {
             console.log(err);
             //redirecting to login page
@@ -71,12 +70,12 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.postSignup = (req, res, next) => {
-     
- const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,head,lab,email,Contact,url,password}  = req.body
-const errs=validationResult(req);
-if(errs){
-    res.json({validation:errs})
-}
+
+    const { name, state, district, Tehsil, address, type, totalBedsCount, OccupiedBedsCount, head, lab, email, Contact, url, password } = req.body
+    const errs = validationResult(req);
+    if (errs) {
+        res.json({ validation: errs })
+    }
     bcrypt.hash(password, 12)
         .then(hashedpwd => {
             const hospital = new Hospital({
@@ -100,7 +99,7 @@ if(errs){
         .then(result => {
             console.log(result);
             console.log("Hospital registered")
-            res.json({msg  :"Hospital registered"})
+            res.json({ msg: "Hospital registered" })
         })
         .catch(err => {
             console.log(err);
@@ -115,75 +114,75 @@ exports.postLogout = (req, res, next) => {
 };
 
 
-exports.updateHosInfo = (req,res) => {
-    const {totalBedsCount,OccupiedBedsCount,totalVentiCount,OccupiedVentiCount,email,head,lab,Contact,photo }  = req.body
+exports.updateHosInfo = (req, res) => {
+    const { totalBedsCount, OccupiedBedsCount, totalVentiCount, OccupiedVentiCount, email, head, lab, Contact, photo } = req.body
 
-    Hospital.findByIdAndUpdate(req.hospital._id, {$set : {totalBedsCount,OccupiedBedsCount,totalVentiCount,OccupiedVentiCount,head,email,lab,Contact,photo }}, {new : true},
-        (err,result) =>{
-           if(err){
-            return res.status(422).json({error:"Updation Failed"})
-           }
-           res.json({result, message:"Updation done "} )
-        } )
+    Hospital.findByIdAndUpdate(req.hospital._id, { $set: { totalBedsCount, OccupiedBedsCount, totalVentiCount, OccupiedVentiCount, head, email, lab, Contact, photo } }, { new: true },
+        (err, result) => {
+            if (err) {
+                return res.status(422).json({ error: "Updation Failed" })
+            }
+            res.json({ result, message: "Updation done " })
+        })
 }
 
 
-exports.addDoctor = (req,res) => {
-    const {firstname,lastname ,email , contact , field , qualification  } = req.body;
+exports.addDoctor = (req, res) => {
+    const { firstname, lastname, email, contact, field, qualification } = req.body;
     var result = '';
-    var characters  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$?';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$?';
     var charactersLength = characters.length;
-    for ( var i = 0; i < 6; i++ ) {
+    for (var i = 0; i < 6; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
-     }
-      const doctorKey = result;
-     bcrypt.hash(result , 12).then(hashedKey => {
-         const doctor = new Doctor({
+    }
+    const doctorKey = result;
+    bcrypt.hash(result, 12).then(hashedKey => {
+        const doctor = new Doctor({
             firstname,
-            lastname ,
+            lastname,
             email,
             contact,
-            field , 
-            qualification , 
-            key : hashedKey
-         })
-         return doctor.save()
-     }).then((err,result) => {
-         
-        transporter.sendMail({
-            to:req.body.email,
-            from:"awesomeraunakbhagat@gmail.com",
-            subject:"Registration Completed",
-            html:"<h1>Your private key is  </h1>"+ doctorKey
+            field,
+            qualification,
+            key: hashedKey
         })
-        return res.json({"added" : true})
-    }).catch(err => {
-         console.log(err)
-     })
-} 
+        return doctor.save()
+    }).then((err, result) => {
 
-exports.listDoctors = (req,res) => {
-    Doctor.find({_id : req.hospital._id}).then(list =>{
-        res.json({list})
+        transporter.sendMail({
+            to: req.body.email,
+            from: "awesomeraunakbhagat@gmail.com",
+            subject: "Registration Completed",
+            html: "<h1>Your private key is  </h1>" + doctorKey
+        })
+        return res.json({ "added": true })
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
+exports.listDoctors = (req, res) => {
+    Doctor.find({ _id: req.hospital._id }).then(list => {
+        res.json({ list })
     }).catch(err => console.log(err))
 }
 
-exports.showHosInfoById = (req,res) => {
-    Hospital.findOne(req.hospital._id).exec((err,hos) => {
-        if(err){
+exports.showHosInfoById = (req, res) => {
+    Hospital.findOne(req.hospital._id).exec((err, hos) => {
+        if (err) {
             return res.json("No hospital find")
         }
-        return res.json({hos})
-    } )
+        return res.json({ hos })
+    })
 }
 
-exports.verifyDoctor = (req,res) =>{
-    const { email , key} = req.body;
- 
-    
+exports.verifyDoctor = (req, res) => {
+    const { email, key } = req.body;
+
+
     Doctor.findOne({ email })
         .then(doc => {
-            if(!doc){
+            if (!doc) {
                 console.log("doctor not found");
                 return;
             }
@@ -193,8 +192,8 @@ exports.verifyDoctor = (req,res) =>{
                         console.log("Key not match");
                         return;
                     }
-                    return res.json({"doctorVerify " :true})
-                   // enable the submit button for prescription
+                    return res.json({ "doctorVerify ": true })
+                    // enable the submit button for prescription
                 })
                 .catch(err => {
                     console.log(err);
@@ -202,7 +201,7 @@ exports.verifyDoctor = (req,res) =>{
         })
         .catch(err => {
             console.log(err);
-        }); 
+        });
 }
 
 

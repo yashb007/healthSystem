@@ -14,6 +14,7 @@ class Header extends Component {
                 <div className="nav-wrapper">
                 <a href="#" className="brand-logo center" id="lab_head">Laboratory</a>
                 <ul id="nav-mobile" className="right ">
+                    <li><Link to="/labprofile">Edit Profile</Link></li>
                     <li><Link to="/lab/login">Logout</Link></li>
                 </ul>
                 </div>

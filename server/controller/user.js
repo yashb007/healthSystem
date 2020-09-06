@@ -70,7 +70,11 @@ exports.registerUser = (req, res) => {
         privateKey,
         healthid,
         contact
-    })
+    });
+    user.save().then(result => {
+        return res.json({result})
+    }).catch(err => 
+        console.log(err))
 };
 
 exports.healthCard = (req, res, next) => {

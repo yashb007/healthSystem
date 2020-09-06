@@ -16,7 +16,7 @@ class Card1 extends Component {
               <h5 className="black-text">Beds</h5>
               <div className="row">
               <div className="col s7">
-                <h4 className="black-text"><span>45/100</span></h4>
+                <h4 className="black-text"><span>{this.props.bedsC}/{this.props.beds}</span></h4>
               </div>    
               <div className="col s5">
                 <div className="card icon" id= "das_c_c1">

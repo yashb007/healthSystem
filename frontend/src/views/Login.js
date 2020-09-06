@@ -17,17 +17,24 @@ changeHandle=(e)=>{
 
 SubmitHandle=(e)=>{
   e.preventDefault();
-  console.log(this.state);
-  axios.post('http://localhost:8080/hsp/login',this.state).then((res)=>{
-    console.log(res)
-    if(res.data.login){
-      console.log(this.props);
-      this.props.history.push("/hosdash")
+    fetch("http://localhost:8080/hsp/login",{
+    method:"Post",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify(this.state)
+    }).then(res => res.json())
+    .then(data => { 
+      if(data.error){
+        alert("error")
+      }
+      else{
+        localStorage.setItem("jwt",data.token)
+        localStorage.setItem("user", JSON.stringify(data.savedUser))
+        this.props.history.push('/hosdash');
+      }
     }
-  })
-  .catch(err=>{
-    console.log(err);
-  });
+      )
 }
 
   render(){

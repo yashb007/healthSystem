@@ -4,7 +4,8 @@ const Hospital = require('../model/hospital');
 const Doctor = require('../model/doctor')
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
-const session = require('express-session');
+const jwt=require("jsonwebtoken")
+const expressJwt=require('express-jwt');
 const PDFDocument = require('pdfkit');
 const path = require('path');
 const fs = require('fs');
@@ -41,7 +42,7 @@ exports.getSignup = (req, res, next) => {
 //     Hospital.findOne({ email })
 //         .then(hospital => {
 //             if(!hospital){
-//                 console.log("user not found");
+//                 console.log("Hospital not found");
 //                 return;
 //             }
 //             bcrypt.compare(password, hospital.password)
@@ -70,53 +71,33 @@ exports.getSignup = (req, res, next) => {
 //         });
 // };
 
-exports.postLogin = (req, res, next) => {
-    const { email, password } = req.body
-
-    Hospital.findOne({ email })
-        .then(hospital => {
-            if (!hospital) {
-                console.log("user not found");
-                return;
+exports.postLogin = (req,res)=>{
+    const {email,password} = req.body
+    if(!email || !password){
+       return res.status(422).json({error:"please add email or password"})
+    }
+    Hospital.findOne({email:email})
+    .then(savedUser=>{
+        if(!savedUser){
+           return res.status(422).json({error:"Invalid Email or password"})
+        }
+        bcrypt.compare(password,savedUser.password)
+        .then(doMatch=>{
+            if(doMatch){
+                // res.json({message:"successfully signed in"})
+               const token = jwt.sign({_id:savedUser._id},"JWT_SECRET")
+            //   const {_id,name,email,followers,following,pic} = savedUser
+               res.json({token,savedUser});
             }
-            bcrypt.compare(password, hospital.password)
-                .then(match => {
-                    if (!match) {
-                        console.log("password not match");
-                        return;
-                    }
-                    req.session.hospitalLoggedIn = true;
-                    req.session.hospital = hospital;
-<<<<<<< HEAD
-                    console.log(req.session,45);
-                    return req.session.save();
-                }).then((data)=>{
-                    res.json({login:true});
-                })
-                .catch(err => {
-                    // console.log(err);
-                    //redirecting to login page
-                });
+            else{
+                return res.status(422).json({error:"Invalid Email or password"})
+            }
         })
-=======
-                    console.log(req.session);
-                    return req.session.save()
-                    //  return res.json({msg : "login"})     //redirecting page
-                }).then((data) => {
-                    res.json({ login: true });
-                });
+        .catch(err=>{
+            console.log(err)
         })
-        .catch(err => {
-            console.log(err);
-            //redirecting to login page
-        })
->>>>>>> 27c5376d37e6c1b1495c122c08112072774f11fc
-        .catch(err => {
-            console.log(err);
-            //redirecting to login page
-        });
-};
-
+    })
+}
 exports.postSignup = (req, res, next) => {
 
     const { name, state, district, Tehsil, address, type, totalBedsCount, OccupiedBedsCount, head, lab, email, Contact, url, password } = req.body
@@ -154,12 +135,10 @@ exports.postSignup = (req, res, next) => {
         })
 };
 
-exports.postLogout = (req, res, next) => {
-    req.session.destroy(err => {
-        console.log(err);
-        //redirecting to hommepage
-    });
-};
+exports.postLogout = (req,res)=>{
+    res.clearCookie("token");
+    res.send({ message : "User signout Successfully"})
+}
 
 
 exports.updateHosInfo = (req, res) => {
@@ -216,8 +195,8 @@ exports.listDoctors = (req, res) => {
 }
 
 exports.showHosInfoById = (req, res) => {
-    console.log(hospital);
-    Hospital.findById(req.hospital._id).exec((err, hos) => {
+console.log(req.params);
+    Hospital.findById(req.params.id).exec((err, hos) => {
         if (err) {
             return res.json("No hospital find")
         }

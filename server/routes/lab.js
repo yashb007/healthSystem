@@ -21,7 +21,7 @@ router.post('/login', [
 router.post('/signup', [
     check('email')
         .custom((value, { req }) => {
-            return Hospital.findOne({ email:req.body.email }).then(HospitalDoc => {
+            return Lab.findOne({ email:req.body.email }).then(HospitalDoc => {
                 if (HospitalDoc) {
                     throw new Error('Lab Registered Already');
                 }

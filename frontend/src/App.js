@@ -47,10 +47,17 @@ const App = () => {
           <AppRoute path="/adddoctor" component={AddDoctor} />
           <AppRoute path="/adduser" component={AddUser} />
           <AppRoute path="/prescription" component={UserPrescription} />
+<<<<<<< HEAD
 
           <AppRoute path="/adduserprofile" component={AddUserProfile} />
           <AppRoute path="/lab" component={Lab} />
           <AppRoute path="/labprofile" component={LabProfile} />
+=======
+          <AppRoute path="/adduserprofile" component={AddUserProfile} />
+          <AppRoute path="/lab" component={Lab} />
+
+
+>>>>>>> 0b315d949fdddb79ac579d3c681a495006a760b9
         </Switch>
       )} />
   );

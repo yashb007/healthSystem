@@ -35,8 +35,8 @@ const labSchema = new Schema({
         type: String,
         required: true
     },
-    Photo: {
-        type: Buffer,
+    url: {
+        type: String,
         required: true
     },
     password: {

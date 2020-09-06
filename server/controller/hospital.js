@@ -1,8 +1,19 @@
 const bcrypt = require('bcryptjs');
 const { validationresult } = require('express-validator');
 const Hospital = require('../model/hospital');
-const Doctor = require('../model/doctor');
+const Doctor = require('../model/doctor')
+const nodemailer = require('nodemailer')
+const sendgridTransport = require('nodemailer-sendgrid-transport')
 const session = require('express-session');
+const PDFDocument = require('pdfkit');
+const path = require('path');
+const fs = require('fs');
+
+const transporter = nodemailer.createTransport(sendgridTransport({
+    auth:{
+        api_key:"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"
+    }
+}))
 
 exports.getHospById = (req,res,next,id) => {
     Hospital.findById(id).exec((err,hos) => {
@@ -60,9 +71,11 @@ exports.postLogin = (req, res, next) => {
 
 exports.postSignup = (req, res, next) => {
      
- const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,head,lab,email,Contact,photo,password  }  = req.body
-
-    
+ const {name,state,district,Tehsil,address,type,totalBedsCount,OccupiedBedsCount,totalVentiCount,OccupiedVentiCount,head,lab,email,Contact,photo,password}  = req.body
+const errs=validationResult(req);
+if(errs){
+    res.json({validation:errs})
+}
     bcrypt.hash(password, 12)
         .then(hashedpwd => {
             const hospital = new Hospital({
@@ -79,7 +92,9 @@ exports.postSignup = (req, res, next) => {
                 Contact,
                 email,
                 password: hashedpwd,
-                photo
+                photo,
+                totalVentiCount,
+                OccupiedVentiCount
             });
             return hospital.save();
         })
@@ -102,9 +117,9 @@ exports.postLogout = (req, res, next) => {
 
 
 exports.updateHosInfo = (req,res) => {
-    const {totalBedsCount,OccupiedBedsCount,email,head,lab,Contact,photo }  = req.body
+    const {totalBedsCount,OccupiedBedsCount,totalVentiCount,OccupiedVentiCount,email,head,lab,Contact,photo }  = req.body
 
-    Hospital.findByIdAndUpdate(req.hospital._id, {$set : {totalBedsCount,OccupiedBedsCount,head,email,lab,Contact,photo }}, {new : true},
+    Hospital.findByIdAndUpdate(req.hospital._id, {$set : {totalBedsCount,OccupiedBedsCount,totalVentiCount,OccupiedVentiCount,head,email,lab,Contact,photo }}, {new : true},
         (err,result) =>{
            if(err){
             return res.status(422).json({error:"Updation Failed"})
@@ -115,27 +130,35 @@ exports.updateHosInfo = (req,res) => {
 
 
 exports.addDoctor = (req,res) => {
-    const {name ,email , contact , field , qualification  } = req.body;
+    const {firstname,lastname ,email , contact , field , qualification  } = req.body;
     var result = '';
     var characters  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$?';
     var charactersLength = characters.length;
-    for ( var i = 0; i < 8; i++ ) {
+    for ( var i = 0; i < 6; i++ ) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
      }
       const doctorKey = result;
      bcrypt.hash(result , 12).then(hashedKey => {
          const doctor = new Doctor({
-             name ,
-             email,
-             contact,
-             field , 
-             qualification , 
-             key : hashedKey
+            firstname,
+            lastname ,
+            email,
+            contact,
+            field , 
+            qualification , 
+            key : hashedKey
          })
          return doctor.save()
-     }).then(result => {
-         res.json(doctorKey)
-     }).catch(err => {
+     }).then((err,result) => {
+         
+        transporter.sendMail({
+            to:req.body.email,
+            from:"awesomeraunakbhagat@gmail.com",
+            subject:"Registration Completed",
+            html:"<h1>Your private key is  </h1>"+ doctorKey
+        })
+        return res.json({"added" : true})
+    }).catch(err => {
          console.log(err)
      })
 } 
@@ -153,4 +176,82 @@ exports.showHosInfoById = (req,res) => {
         }
         return res.json({hos})
     } )
+}
+
+exports.verifyDoctor = (req,res) =>{
+    const { email , key} = req.body;
+ 
+    
+    Doctor.findOne({ email })
+        .then(doc => {
+            if(!doc){
+                console.log("doctor not found");
+                return;
+            }
+            bcrypt.compare(key, hospital.key)
+                .then(match => {
+                    if (!match) {
+                        console.log("Key not match");
+                        return;
+                    }
+                    return res.json({"doctorVerify " :true})
+                   // enable the submit button for prescription
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        })
+        .catch(err => {
+            console.log(err);
+        }); 
+}
+
+
+exports.getPrescription = (req, res, next) => {
+    const hospitalname = req.body.hospitalname;
+    const patientname = req.body.patientname;
+    const age = req.body.age;
+    const date = req.body.date;
+    const medicine = req.body.medicine;
+    const strength = req.body.strength;
+    const dose = req.body.dose;
+    const duration = req.body.duration;
+    const key = req.body.key;
+
+    const prescName = 'invoice' + date + patientname + '.pdf';
+    const prescPath = path.join('data', 'invoices', prescName);
+    const pdfDoc = new PDFDocument();
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment;filename="' + prescName + '"');
+
+
+    Doctor.find({ key: key })
+        .then(key => {
+            if (!key) {
+                pdfDoc.pipe(fs.createWriteStream(prescPath));
+                pdfDoc.pipe(res);
+                pdfDoc.fontSize(30).text("PRESCRIPTION", {
+                    underline: true
+                });
+                pdfDoc.text("___________________________________________________________________________");
+                pdfDoc.fontSize(20).text(
+                    "Medicine Name", "Strength", "Dose", "Duration"
+                );
+                pdfDoc.text("___________________________________________________________________________");
+
+                pdfDoc.fontSize(15).text(
+                    medicine, strength, dose
+                );
+
+                pdfDoc.text("____________________________________________________________________________");
+                pdfDoc.text('Duration:' + duration);
+
+                pdfDoc.fontSize(20).text('Hospital Name:' + hospitalname);
+                pdfDoc.end();
+            }
+
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }

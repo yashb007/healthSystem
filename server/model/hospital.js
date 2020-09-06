@@ -36,6 +36,14 @@ const hospitalSchema = new Schema({
         type: Number,
         required: true
     },
+    totalVentiCount: {
+        type: Number,
+        required: true
+    },
+    OccupiedVentiCount: {
+        type: Number,
+        required: true
+    },
     email:{
         type: String,
         required: true

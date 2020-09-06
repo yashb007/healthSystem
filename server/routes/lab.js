@@ -1,29 +1,29 @@
 const express = require('express');
-const { check, body } = require('express-validator');
+const { check, body } = require('express-validator/check');
 const router = express.Router();
-const Hospital = require('../model/hospital');
+const Lab = require('../model/laboratry');
 
 
-const hospital = require('../controller/hospital');
+const lab = require('../controller/laboratry');
 
 
-router.get('/login', hospital.getLogin);
+router.get('/login', lab.getLogin);
 
-router.get('/signup', hospital.getSignup);
+router.get('/signup', lab.getSignup);
 
 router.post('/login', [
     body('password', 'Password has to be valid.')
         .isLength({ min: 5 })
         .isAlphanumeric()
         .trim()
-], hospital.postLogin);
+], lab.postLogin);
 
 router.post('/signup', [
     check('email')
         .custom((value, { req }) => {
             return Hospital.findOne({ email:req.body.email }).then(HospitalDoc => {
                 if (HospitalDoc) {
-                    throw new Error('Hospital Registered Already');
+                    throw new Error('Lab Registered Already');
                 }
             });
         }),
@@ -36,10 +36,10 @@ router.post('/signup', [
         .trim()
    
         
-], hospital.postSignup);
+], lab.postSignup);
 
-router.post('/logout', hospital.postLogout);
+router.post('/logout', lab.postLogout);
 
-router.post('/addDoctor', hospital.addDoctor);
+//router.post('/addreport',lab.addreport)
 
 module.exports = router;

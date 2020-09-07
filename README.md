@@ -8,7 +8,7 @@ A one stop website satisfying all your needs ranging from nearest medical facili
 ![Group 19](https://user-images.githubusercontent.com/54709833/92414162-97955980-f170-11ea-95fa-f57f3a4d7656.png)
 
 
-##Contributors
+## Contributors
 
 <table>
   <tr>

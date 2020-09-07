@@ -5,7 +5,8 @@ Also a blend of a unique HealtId based authorization System to get at par the ph
 A one stop website satisfying all your needs ranging from nearest medical facility to getting lab reports & pharmacy including an emergency ambulance tracking system.
 
 ## Our Health Card Design
-![Group 19](https://user-images.githubusercontent.com/54709833/92413467-dece1b00-f16d-11ea-9f25-a03a076cfb63.png)" 
+![Group 19](https://user-images.githubusercontent.com/54709833/92414162-97955980-f170-11ea-95fa-f57f3a4d7656.png)
+
 
 ##Contributors
 

@@ -4,8 +4,11 @@ A Centralized Portal For all in one access to health & wellness system including
 Also a blend of a unique HealtId based authorization System to get at par the phishing techniques.
 A one stop website satisfying all your needs ranging from nearest medical facility to getting lab reports & pharmacy including an emergency ambulance tracking system.
 
-## Our Health Card Design
+## Our Health Card Design ->
 ![Group 19](https://user-images.githubusercontent.com/54709833/92414162-97955980-f170-11ea-95fa-f57f3a4d7656.png)
+
+## Link to ppt ->
+[Central Health Care System.pptx](https://github.com/yashb007/healthSystem/files/5184785/Central.Health.Care.System.pptx)
 
 
 ## Contributors
@@ -18,3 +21,5 @@ A one stop website satisfying all your needs ranging from nearest medical facili
     <td align="center"><a href="https://github.com/Raunak101"><img src="https://avatars2.githubusercontent.com/u/63440627?s=400&v=4" width="200px;" alt=""/><br /><sub><b>Raunak101</b></sub></a><br /></td>
   </tr>
 </table>
+
+

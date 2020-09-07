@@ -8,7 +8,7 @@ A one stop website satisfying all your needs ranging from nearest medical facili
 ![Group 19](https://user-images.githubusercontent.com/54709833/92414162-97955980-f170-11ea-95fa-f57f3a4d7656.png)
 
 ## Link to ppt ->
-https://docs.google.com/presentation/d/1v7LztItvm_Od7DUJpPpree0vgIZ2JbrP8ZRSRDLQRfk/edit#slide=id.p
+<a href="https://docs.google.com/presentation/d/1v7LztItvm_Od7DUJpPpree0vgIZ2JbrP8ZRSRDLQRfk/edit#slide=id.p" >Centralized Health System</a>
 
 
 ## Contributors
